@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
 import 'package:projectui/Pages/Forms/login_page.dart';
+import 'package:projectui/Pages/Forms/create_event.dart';
 
 
 void main() {
@@ -36,7 +37,8 @@ class MyAppPage extends StatelessWidget {
         //HANDLES ROUTING
         routes: {
           '/Login' : (context) => LoginPage(),
-          '/CreateAccount':(context) => const CreateAccountPage()
+          '/CreateAccount':(context) => const CreateAccountPage(),
+          '/CreateEvent':(context) => const CreateEventPage()
           
         },
         home: Scaffold(
