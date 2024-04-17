@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 class CreateAccountPage extends StatelessWidget {
   const CreateAccountPage({super.key});
@@ -11,18 +9,20 @@ class CreateAccountPage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           body: Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("assets/forms_back.png"),
               fit: BoxFit.cover,
             )),
-            child: Form(),
+            child: const Form(),
           ),
         ));
   }
 }
 
 class Form extends StatefulWidget {
+  const Form({super.key});
+
   @override
   State<Form> createState() => _FormState();
 }
@@ -57,7 +57,7 @@ class _FormState extends State<Form> {
           children: [
             //Title
             Padding(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Center(
                   child: Text(
                     "Create Account",
@@ -70,12 +70,12 @@ class _FormState extends State<Form> {
 
             //Name of School
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Column(children: [
                   //INNER FORM
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: const Text(
                       "Name Of School",
                       style: TextStyle(
@@ -105,12 +105,12 @@ class _FormState extends State<Form> {
 
             //Name
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Column(children: [
                   //INNER FORM
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: const Text(
                       "Name Of School",
                       style: TextStyle(
@@ -141,12 +141,12 @@ class _FormState extends State<Form> {
 
             //Email
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Column(children: [
                   //INNER FORM
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: const Text(
                       "Name Of School",
                       style: TextStyle(
@@ -176,12 +176,12 @@ class _FormState extends State<Form> {
 
             //PASSWORD
             Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                 child: Column(children: [
                   //INNER FORM
                   Container(
                     alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                     child: const Text(
                       "Name Of School",
                       style: TextStyle(
@@ -212,7 +212,7 @@ class _FormState extends State<Form> {
             //CREATE ACCOUNT
             Center(
                 child: Padding(
-              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+              padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: Container(
                 width: 300,
                 height: 50,
@@ -236,7 +236,7 @@ class _FormState extends State<Form> {
                         .white, // Change the button's background color here
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(30),
-                      side: BorderSide(color: Colors.white, width: 2),
+                      side: const BorderSide(color: Colors.white, width: 2),
                     ),
                   ),
                   child: const Center(

@@ -1,12 +1,10 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'dart:io';
 import '../GoogleMaps/location_picker.dart';
-
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({super.key});
@@ -24,38 +22,36 @@ class _CreateEventPageState extends State<CreateEventPage> {
   LatLng? _eventLocation;
   String _schoolOrganization = '';
   String _eventType = '';
-  XFile? _eventImage;
+  List<XFile> _eventImages = [];
 
- Future<void> _pickEventLocation() async {
-  // Show the MapPicker widget to allow the user to pick a location
-  final LatLng? location = await Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => MapPicker()),
-  );
-  if (location != null) {
-    setState(() {
-      _eventLocation = location;
-      print('Selected location: $_eventLocation');
-    });
-  }
-}
-
-  Future<void> _pickEventImage() async {
-    // Use image_picker package to allow the user to pick an image
-    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image != null) {
+  Future<void> _pickEventLocation() async {
+    // Show the MapPicker widget to allow the user to pick a location
+    final LatLng? location = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => MapPicker()),
+    );
+    if (location != null) {
       setState(() {
-        _eventImage = image;
+        _eventLocation = location;
+        print('Selected location: $_eventLocation');
       });
     }
   }
+
+  Future<void> _pickEventImages() async {
+    // Use image_picker package to allow the user to pick multiple images
+    final List<XFile> images = await ImagePicker().pickMultiImage();
+    setState(() {
+      _eventImages.addAll(images);
+    });
+    }
 
   Future<void> _saveEvent() async {
     if (_formKey.currentState?.validate() ?? false) {
       // Save the event data to Firebase
       final user = FirebaseAuth.instance.currentUser;
       if (user != null) {
-        await FirebaseFirestore.instance.collection('events').add({
+        final eventData = {
           'title': _eventTitleController.text,
           'description': _eventDescriptionController.text,
           'startDateTime': _startDateTime,
@@ -64,8 +60,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
           'schoolOrganization': _schoolOrganization,
           'eventType': _eventType,
           'createdBy': user.uid,
-          'imageUrl': await _uploadEventImage(),
-        });
+          'imageUrls': await _uploadEventImages(),
+        };
+        await FirebaseFirestore.instance.collection('events').add(eventData);
         // Clear the form fields
         _eventTitleController.clear();
         _eventDescriptionController.clear();
@@ -75,19 +72,20 @@ class _CreateEventPageState extends State<CreateEventPage> {
           _eventLocation = null;
           _schoolOrganization = '';
           _eventType = '';
-          _eventImage = null;
+          _eventImages = [];
         });
       }
     }
   }
 
-  Future<String?> _uploadEventImage() async {
-    // Use Cloudinary or any other image hosting service to upload the event image
-    if (_eventImage != null) {
+  Future<List<String>> _uploadEventImages() async {
+    // Use Cloudinary or any other image hosting service to upload the event images
+    final List<String> imageUrls = [];
+    for (final image in _eventImages) {
       // Upload the image and get the URL
-      return 'https://example.com/event-image.jpg';
+      imageUrls.add('https://example.com/event-image.jpg');
     }
-    return null;
+    return imageUrls;
   }
 
   @override
@@ -175,8 +173,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
               ),
               const SizedBox(height: 16.0),
               DropdownButtonFormField<String>(
-                value: _eventType,
-                onChanged: (value) {
+                value: _eventType.isNotEmpty ? _eventType : null,
+                onChanged: (String? value) {
                   setState(() {
                     _eventType = value ?? '';
                   });
@@ -197,9 +195,28 @@ class _CreateEventPageState extends State<CreateEventPage> {
                 },
               ),
               const SizedBox(height: 16.0),
+              if (_eventImages.isNotEmpty)
+                Expanded(
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount: _eventImages.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(
+                          child: Image.file(
+                            File(_eventImages[index].path),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              const SizedBox(height: 16.0),
               ElevatedButton(
-                onPressed: _pickEventImage,
-                child: const Text('Upload Event Image'),
+                onPressed: _pickEventImages,
+                child: const Text('Upload Event Images'),
               ),
               const SizedBox(height: 16.0),
               ElevatedButton(

@@ -3,10 +3,8 @@
 
 //import 'dart:js';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
 import 'package:projectui/Pages/Forms/login_page.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
@@ -36,7 +34,7 @@ class MyAppPage extends StatelessWidget {
 
         //HANDLES ROUTING
         routes: {
-          '/Login' : (context) => LoginPage(),
+          '/Login' : (context) => const LoginPage(),
           '/CreateAccount':(context) => const CreateAccountPage(),
           '/CreateEvent':(context) => const CreateEventPage()
           
@@ -48,7 +46,7 @@ class MyAppPage extends StatelessWidget {
                 image: AssetImage("assets/landing_back.png"),
                 fit: BoxFit.cover,
               )),
-              child: HomeScreenStructure()),
+              child: const HomeScreenStructure()),
         ));
   }
 }
@@ -68,6 +66,8 @@ void googleClicked(BuildContext context) {
 }
 
 class HomeScreenStructure extends StatefulWidget {
+  const HomeScreenStructure({super.key});
+
   @override
   State<HomeScreenStructure> createState() => _HomeScreenStructureState();
 }
@@ -88,7 +88,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(
+                    padding: const EdgeInsets.fromLTRB(
                         5, 30, 0, 2), //NOTE MAKE THIS MORE RESPONSIVE
                     alignment: Alignment.center,
                     child: Image.asset('assets/logo.png'),
@@ -115,10 +115,10 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
-                      color: Color.fromRGBO(0, 168, 89, 1),
+                      color: const Color.fromRGBO(0, 168, 89, 1),
                       width: 2,
                     ),
-                    color: Color.fromRGBO(0, 168, 89, 1),
+                    color: const Color.fromRGBO(0, 168, 89, 1),
                   ),
 
                   child: ElevatedButton(
@@ -126,14 +126,14 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
                       loginClicked(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Color.fromRGBO(0, 168, 89,1), // Change the button's background color here
+                      backgroundColor: const Color.fromRGBO(0, 168, 89,1), // Change the button's background color here
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
-                        side: BorderSide(
+                        side: const BorderSide(
                             color: Color.fromRGBO(0, 168, 89, 1), width: 2),
                       ),
                     ),
-                    child: Center(
+                    child: const Center(
                         child: Text(
                       "Sign in with email",
                       style: TextStyle(color: Colors.white),
@@ -146,7 +146,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
                 Container(
                   width: 335,
                   height: 40,
-                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Row(
                     children: [
                       //LINE 1
@@ -161,7 +161,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
 
                       //OR
                       Container(
-                        padding: EdgeInsets.symmetric(horizontal: 12),
+                        padding: const EdgeInsets.symmetric(horizontal: 12),
                         child: const Text(
                           "or",
                           style: TextStyle(
@@ -211,7 +211,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
                         text: TextSpan(children: [
                           WidgetSpan(
                               child: Padding(
-                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            padding: const EdgeInsets.symmetric(horizontal: 5),
                             child: Image.asset('assets/google.png'),
                           )),
                           const WidgetSpan(
@@ -240,7 +240,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
             )),
 
             Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 70),
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 70),
               child: RichText(
               text: TextSpan(
                 children: [
