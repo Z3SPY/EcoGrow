@@ -4,6 +4,8 @@ import 'package:projectui/main.dart';
 
 
 class LoginPage extends StatefulWidget {
+  const LoginPage({super.key});
+
   @override
   State<LoginPage> createState() => _LoginPageState();
 }
@@ -14,19 +16,19 @@ class _LoginPageState extends State<LoginPage> {
     
     return MaterialApp(
       routes: {
-        "/MainPage": (context) => MyAppPage(),
-        "/Login" : (context) => LoginPage(),
-        "/CreateAccount":(context) => CreateAccountPage()
+        "/MainPage": (context) => const MyAppPage(),
+        "/Login" : (context) => const LoginPage(),
+        "/CreateAccount":(context) => const CreateAccountPage()
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("assets/forms_back.png"),
               fit: BoxFit.cover,
             )),
-          child: Form(),
+          child: const Form(),
         )
 
       )
@@ -48,6 +50,8 @@ void CreateAccountClick(BuildContext context) {
 
 // MAIN LOGIN FORM
 class Form extends StatefulWidget {
+  const Form({super.key});
+
   @override
   State<Form> createState() => _FormState();
 }
@@ -61,11 +65,11 @@ class _FormState extends State<Form> {
         Expanded(
             flex: 2,
             child: Container(
-              padding: EdgeInsets.all(0),
+              padding: const EdgeInsets.all(0),
               child: Column(
                 children: [
                   Container(
-                    padding: EdgeInsets.fromLTRB(
+                    padding: const EdgeInsets.fromLTRB(
                         5, 30, 0, 2), //NOTE MAKE THIS MORE RESPONSIVE
                     alignment: Alignment.center,
                     child: Image.asset('assets/logo.png'),
@@ -82,7 +86,7 @@ class _FormState extends State<Form> {
               flex: 5,
               child:  Container(
                 width: 340,
-                padding: EdgeInsets.symmetric(vertical: 0),
+                padding: const EdgeInsets.symmetric(vertical: 0),
                 decoration: BoxDecoration(
                     gradient: const LinearGradient(
                       begin: Alignment.bottomCenter,
@@ -104,7 +108,7 @@ class _FormState extends State<Form> {
                 
                     //Title
                     Padding(
-                        padding: EdgeInsets.symmetric(vertical: 10),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         child: Center(
                           child: Text(
                             "Login",
@@ -119,12 +123,12 @@ class _FormState extends State<Form> {
                   
                     //Username
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         child: Column(children: [
                           //INNER FORM
                           Container(
                             alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                             child: const Text(
                               "Username",
                               style: TextStyle(
@@ -157,12 +161,12 @@ class _FormState extends State<Form> {
 
                     //PASSWORD
                     Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                         child: Column(children: [
                           //INNER FORM
                           Container(
                             alignment: Alignment.centerLeft,
-                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                             child: const Text(
                               "Password",
                               style: TextStyle(
@@ -195,7 +199,7 @@ class _FormState extends State<Form> {
                     //LOGIN BUTTON
                     Center(
                         child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 30, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
                       child: Container(
                         width: 300,
                         height: 50,
@@ -224,7 +228,7 @@ class _FormState extends State<Form> {
                                 .white, // Change the button's background color here
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
-                              side: BorderSide(color: Colors.white, width: 2),
+                              side: const BorderSide(color: Colors.white, width: 2),
                             ),
                           ),
                           child: const Center(
@@ -242,7 +246,7 @@ class _FormState extends State<Form> {
                     //Divider 
                     Container(
                       height: 24,
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       child: Row(
                         children: [
                           //LINE 1
@@ -266,7 +270,7 @@ class _FormState extends State<Form> {
                     //OAUTH BUTTON
                     Center(
                         child: Padding(
-                      padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: Container(
                         width: 300,
                         height: 50,
@@ -290,12 +294,12 @@ class _FormState extends State<Form> {
                                 .white, // Change the button's background color here
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30),
-                              side: BorderSide(color: Colors.white, width: 2),
+                              side: const BorderSide(color: Colors.white, width: 2),
                             ),
                           ),
                           child: const Center(
                               child: Text(
-                            "Login With Google",
+                            "Sign up",
                             style: TextStyle(
                                 color: Color.fromRGBO(0, 168, 89, 1), fontSize: 17),
                           )),
