@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:projectui/Pages/DashboardPages/Dashboard/mainDashboard.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
-import 'package:projectui/main.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -16,9 +16,10 @@ class _LoginPageState extends State<LoginPage> {
     
     return MaterialApp(
       routes: {
-        "/MainPage": (context) => const MyAppPage(),
+        "/MainPage": (context) => const mainDashboard(),
         "/Login" : (context) => const LoginPage(),
-        "/CreateAccount":(context) => const CreateAccountPage()
+        "/CreateAccount":(context) => const CreateAccountPage(),
+        
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(

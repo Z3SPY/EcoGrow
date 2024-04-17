@@ -41,7 +41,7 @@ class MyAppPage extends StatelessWidget {
         },
         home: Scaffold(
           body: Container(
-              decoration:const BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage("assets/landing_back.png"),
                 fit: BoxFit.cover,
@@ -67,6 +67,7 @@ void googleClicked(BuildContext context) {
 
 class HomeScreenStructure extends StatefulWidget {
   const HomeScreenStructure({super.key});
+
 
   @override
   State<HomeScreenStructure> createState() => _HomeScreenStructureState();
