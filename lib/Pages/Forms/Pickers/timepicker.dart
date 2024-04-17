@@ -20,7 +20,7 @@ class _TimePickerState extends State<TimePicker> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Text(
-              _timeOfDay.hour.toString() + ':' + _timeOfDay.minute.toString(),
+              _timeOfDay.hour.toString().padLeft(2, '0') + ':' + _timeOfDay.minute.toString().padLeft(2, '0'),
               style: const TextStyle(fontSize: 20),
             ),
             const SizedBox(height: 30,),
@@ -28,7 +28,7 @@ class _TimePickerState extends State<TimePicker> {
               height: 50,
               minWidth: 150,
               color: const Color(0xff1D1E22),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
               child: const Text('Select Time', style: TextStyle(color: Colors.white),),
               onPressed: () {
                 _selectTime();
@@ -38,6 +38,20 @@ class _TimePickerState extends State<TimePicker> {
           ],
         ),
       ),
-    );
+    );  
   }
+
+  Future <void> _selectTime() async {
+    TimeOfDay? _picked = await showTimePicker(context: context, initialTime: _timeOfDay);
+
+    if (_picked != null){
+      setState(() {
+        _timeOfDay = _picked;
+      });
+    }
+
+  }
+
+
+
 }

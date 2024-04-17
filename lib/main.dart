@@ -67,7 +67,7 @@ void registerClicked(BuildContext context) {
 
 void googleClicked(BuildContext context) {
   print("Start OAUTH WINDOW");
-  Navigator.pushNamed(context, '/DatePicker');
+  Navigator.pushNamed(context, '/TimePicker');
 }
 
 class HomeScreenStructure extends StatefulWidget {
