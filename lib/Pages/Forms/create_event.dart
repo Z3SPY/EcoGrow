@@ -206,7 +206,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
                             Text('Start:'),
                             SizedBox(width: 10),
                             Expanded( child: ElevatedButton(
-                              onPressed: () {}, 
+                              onPressed: () {
+                                print(_startDateTime);
+                              }, 
                               child: Text("June 23, 2024", 
                                   style: TextStyle(color: Color.fromRGBO(45, 143, 72, 1),
                                   fontWeight: FontWeight.bold
@@ -241,7 +243,9 @@ class _CreateEventPageState extends State<CreateEventPage> {
                             Text('End:'),
                             SizedBox(width: 15,),
                             Expanded( child: ElevatedButton(
-                              onPressed: () {}, 
+                              onPressed: () {
+                                print(_endDateTime);
+                                }, 
                               child: Text("June 23, 2024", 
                                   style: TextStyle(color: Color.fromRGBO(45, 143, 72, 1),
                                   fontWeight: FontWeight.bold
