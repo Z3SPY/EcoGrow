@@ -37,6 +37,7 @@ import 'package:projectui/Pages/DashboardPages/MyImpact/myimpactpage.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
 import 'package:projectui/Pages/Profile/profile.dart';
 import 'package:projectui/Pages/Weather/weather.dart';
+import 'package:projectui/Pages/Weather/weather_ui.dart';
 
 
 class mainDashboard extends StatefulWidget {
@@ -54,7 +55,6 @@ class _mainDashboardState extends State<mainDashboard> {
     return MaterialApp(
         routes: {
           "/ContentPage": (context) => ContentPage(),
-          "/SchoolPage": (context) => schoolOrgPage(),
           "/CreateEvent": (context) => CreateEventPage(),
           "/Profile" : (context) => Profile()
          },
@@ -449,7 +449,7 @@ class _ActivitesState extends State<Activites> {
         //Weather API
         Container(
           height: 200, // Adjust the height as needed
-          child: Weather(),
+          child: WeatherPage(),
         ),
 
 

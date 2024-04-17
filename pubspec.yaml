@@ -85,6 +85,11 @@ flutter:
     - assets/wallet.png
     - assets/List.png
     - assets/weather/
+    - assets/PLM.png
+    - assets/NU.png
+    - assets/PUP.png
+    - assets/UP.png
+    - assets/UE.png
 
   #   - images/a_dot_ham.jpeg
 

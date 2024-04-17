@@ -12,9 +12,21 @@ class leaderBoardComp extends StatefulWidget {
   State<leaderBoardComp> createState() => _leaderBoardCompState();
 }
 
+class SchoolItem {
+  final String imagePath;
+  final String name;
+  final int Score;
+
+  SchoolItem({required this.imagePath, required this.name, required this.Score});
+}
+
 class _leaderBoardCompState extends State<leaderBoardComp> {
 
-  final List<String> Items = ["2", "2", "2", "2", "2", "2", "2",];
+  final List<SchoolItem> items = [
+    SchoolItem(imagePath: "assets/PUP.png", name: "Polytechnic University of the Philippines", Score: 100),
+    SchoolItem(imagePath: "assets/UP.png", name: "University of the Phillippines", Score: 80),
+    SchoolItem(imagePath: "assets/UE.png", name: "University of the East", Score: 50),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +46,7 @@ class _leaderBoardCompState extends State<leaderBoardComp> {
           child: Divider(),),
           
           SingleChildScrollView(
-              child:  boardList(items: Items,),
+              child:  boardList(items: items,),
           ) 
           
           
@@ -57,7 +69,7 @@ class _leaderBoardCompState extends State<leaderBoardComp> {
 
 //List 
 class boardList extends StatefulWidget {
-  final List<String> items; 
+  final List<SchoolItem> items; 
 
   const boardList({Key? key, required this.items}) : super(key: key);
 
@@ -77,18 +89,23 @@ class _boardListState extends State<boardList> {
 
         //POST LISTS
         ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: widget.items.length,
-            itemBuilder: (context, index) {
-
-              // MAKE A CUSTOM CARD FOR SCHOOLS
-              return Padding(
+          shrinkWrap: true,
+          physics: NeverScrollableScrollPhysics(),
+          itemCount: widget.items.length,
+          itemBuilder: (context, index) {
+            return GestureDetector(
+              onTap: () {
+                // Navigate to the detail page and pass the unique value
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => schoolOrgPage(schoolName: widget.items[index].name, schoolImg: widget.items[index].imagePath, numberOfEvents: widget.items[index].Score,),
+                  ),
+                );
+              },
+              child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                child: 
-                
-                //Put this in a separte conatiner
-                Container(
+                child: Container(
                   width: 50,
                   height: 50,
                   decoration: BoxDecoration(
@@ -98,7 +115,7 @@ class _boardListState extends State<boardList> {
                         color: Colors.black.withOpacity(0.125),
                         spreadRadius: 1,
                         blurRadius: 10,
-                        offset: Offset(0,3)
+                        offset: Offset(0, 3),
                       )
                     ],
                     border: Border.all(
@@ -107,16 +124,46 @@ class _boardListState extends State<boardList> {
                     ),
                     color: Colors.white,
                   ),
-                  child: Padding(padding: EdgeInsets.symmetric(horizontal: 10),),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Image.asset(widget.items[index].imagePath, fit: BoxFit.contain),
+                        ),
+                        Expanded(
+                          flex: 2,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "TOP ${3 + index}",
+                                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                              ),
+                              Text(
+                                "${widget.items[index].name}",
+                                style: TextStyle(overflow: TextOverflow.ellipsis),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Expanded(
+                          flex: 1,
+                          child: Text(
+                            "${widget.items[index].Score}",
+                            style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold, color: Colors.black54),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-              );
+              ),
+            );
+          },
+        )
 
-              // 
-
-
-
-            },
-          ),
         
         ]);
   }
@@ -165,8 +212,9 @@ class _boardGraphState extends State<boardGraph> {
                   // Add your onPressed functionality here
                     Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => schoolOrgPage()),
-                  );
+                    MaterialPageRoute(builder: (context) => schoolOrgPage(schoolName: "Technological Institute of the Philippines", schoolImg: 'assets/school_logo.png', numberOfEvents: 400,)
+                  )
+                    );
                 },
               ),
             ),
@@ -224,11 +272,11 @@ class _boardGraphState extends State<boardGraph> {
                 
                  Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => schoolOrgPage()),
-                );
+                    MaterialPageRoute(builder: (context) => schoolOrgPage(schoolName: "Polytechnic University of the Philippines", schoolImg: 'assets/PLM.png', numberOfEvents: 600,)
+                ));
               },
               child: Image.asset(
-                'assets/school_logo.png',
+                'assets/PLM.png',
                 fit: BoxFit.contain, // Adjust width and height here
               ),
             ),
@@ -292,11 +340,11 @@ class _boardGraphState extends State<boardGraph> {
                 // Add your onPressed functionality here
                  Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => schoolOrgPage()),
-                );
+                  MaterialPageRoute(builder: (context) => schoolOrgPage(schoolName: "National University", schoolImg: 'assets/NU.png', numberOfEvents: 200,)
+                ));
               },
               child: Image.asset(
-                'assets/school_logo.png',
+                'assets/NU.png',
                 fit: BoxFit.contain, // Adjust width and height here
               ),
             )

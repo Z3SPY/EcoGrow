@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import '../Weather/weather_model.dart';
 import '../Weather/weather_service.dart';
 import 'package:lottie/lottie.dart';
@@ -67,10 +68,104 @@ class _WeatherPageState extends State<WeatherPage> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text(_weather?.cityName ?? 'Loading...'),
-          Lottie.asset(getWeatherAnimations(_weather?.mainCondition)),
-          Text('${_weather?.temperature.round() ?? 'Loading...'}°'),
-          Text(_weather?.mainCondition ?? "")
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+            SizedBox(
+              width: 150, // Adjust width as needed
+              height: 150, // Adjust height as needed
+              child: Lottie.asset(getWeatherAnimations(_weather?.mainCondition)),
+              
+            ), 
+            
+            Container(
+              child: Column(children: [
+                  
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        '${_weather?.temperature.round() ?? 'Loading...'}°',
+                        style: TextStyle(fontSize: 24), // Adjust font size as needed
+                      ),
+                      Icon(
+                        Icons.thermostat,
+                        size: 24, // Adjust size as needed
+                      ),
+                    ],
+                  ),
+
+                  Text(_weather?.mainCondition ?? "")
+
+              ],),
+            )
+          ],),
+          //Text(_weather?.cityName ?? 'Loading...'),
+
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Expanded(
+                  
+                  child: Column (children: [
+                    SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: Lottie.asset(getWeatherAnimations('Sunny')),
+                    ),
+                    
+                  ],)
+
+                  
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('Sunny')),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('atmosphere')),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('drizzle')),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('atmosphere')),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('clear')),
+                  ),
+                ),
+                Expanded(
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: Lottie.asset(getWeatherAnimations('clouds')),
+                  ),
+                ),
+              ],
+            ),
+          ),
+                
         ],
       ),
     ));
