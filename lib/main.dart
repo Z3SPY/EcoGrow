@@ -55,7 +55,7 @@ class MyAppPage extends StatelessWidget {
 
 void loginClicked(BuildContext context) {
   print("Login Clicked");
-  Navigator.pushNamed(context, '/Login');
+  Navigator.pushNamed(context, '/CreateEvent');
 }
 
 void registerClicked(BuildContext context) {

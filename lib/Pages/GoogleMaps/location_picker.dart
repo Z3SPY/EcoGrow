@@ -9,16 +9,15 @@ class MapPicker extends StatefulWidget {
   static const DEFAULT_ZOOM = 14.4746;
   static const KINSHASA_LOCATION = LatLng(-4.325, 15.322222);
 
-  double initZoom;
-  LatLng initCoordinates;
-
+  final double initZoom;
+  final LatLng initCoordinates;
   LatLng? value;
 
-  MapPicker(
-      {Key? key,
-      this.initZoom = DEFAULT_ZOOM,
-      this.initCoordinates = KINSHASA_LOCATION})
-      : super(key: key);
+  MapPicker({
+    Key? key,
+    this.initZoom = DEFAULT_ZOOM,
+    this.initCoordinates = KINSHASA_LOCATION,
+  }) : super(key: key);
 
   @override
   State<MapPicker> createState() => _MapPickerState();
@@ -32,7 +31,6 @@ class _MapPickerState extends State<MapPicker> {
     return Scaffold(
       body: Center(
         child: SizedBox(
-          // width: 400,
           height: 300,
           child: LayoutBuilder(
             builder: (context, constraints) {
@@ -53,8 +51,9 @@ class _MapPickerState extends State<MapPicker> {
                         _controller.complete(controller);
                       },
                       onCameraMove: (CameraPosition newPosition) {
-                        // print(newPosition.target.toJson());
-                        widget.value = newPosition.target;
+                        setState(() {
+                          widget.value = newPosition.target;
+                        });
                       },
                       mapType: MapType.normal,
                       myLocationButtonEnabled: true,
@@ -93,13 +92,29 @@ class _MapPickerState extends State<MapPicker> {
                           final GoogleMapController controller =
                               await _controller.future;
                           controller.animateCamera(
-                              CameraUpdate.newCameraPosition(CameraPosition(
-                                  target: LatLng(
-                                      position.latitude, position.longitude),
-                                  zoom: widget.initZoom)));
+                            CameraUpdate.newCameraPosition(
+                              CameraPosition(
+                                target: LatLng(
+                                  position.latitude,
+                                  position.longitude,
+                                ),
+                                zoom: widget.initZoom,
+                              ),
+                            ),
+                          );
                         },
                         icon: const Icon(Icons.my_location),
                       ),
+                    ),
+                  ),
+                  Positioned(
+                    bottom: 10,
+                    left: 10,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context, widget.value);
+                      },
+                      child: const Text('Save Location'),
                     ),
                   ),
                 ],

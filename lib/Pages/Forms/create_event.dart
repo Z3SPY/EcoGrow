@@ -35,6 +35,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   if (location != null) {
     setState(() {
       _eventLocation = location;
+      print('Selected location: $_eventLocation');
     });
   }
 }
