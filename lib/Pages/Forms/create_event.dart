@@ -6,6 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../GoogleMaps/location_picker.dart';
+import './Pickers/datepicker.dart';
+import './Pickers/timepicker.dart';
 
 
 class CreateEventPage extends StatefulWidget {
@@ -25,6 +27,33 @@ class _CreateEventPageState extends State<CreateEventPage> {
   String _schoolOrganization = '';
   String _eventType = '';
   XFile? _eventImage;
+
+  
+
+  Future<void> _selectStartDateTime() async {
+  final newStartDateTime = await showDialog<DateTime>(
+    context: context,
+    builder: (context) => DatePicker(),
+  );
+  if (newStartDateTime != null) {
+    setState(() {
+      _startDateTime = newStartDateTime;
+    });
+  }
+}
+
+ Future<void> _selectEndDateTime() async {
+  final newStartDateTime = await showDialog<DateTime>(
+    context: context,
+    builder: (context) => DatePicker(),
+  );
+  if (newStartDateTime != null) {
+    setState(() {
+      _startDateTime = newStartDateTime;
+    });
+  }
+}
+
 
  Future<void> _pickEventLocation() async {
   // Show the MapPicker widget to allow the user to pick a location
@@ -88,6 +117,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
     }
     return null;
   }
+
+  
 
   @override
   Widget build(BuildContext context) {

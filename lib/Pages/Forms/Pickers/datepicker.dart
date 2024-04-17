@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 
 class DatePicker extends StatefulWidget {
-  const DatePicker({Key? key}) : super(key: key);
+  final void Function(DateTime)? onDateSelected;
+
+  const DatePicker({Key? key, this.onDateSelected}) : super(key: key);
 
   @override
   _DatePickerState createState() => _DatePickerState();
 }
 
 class _DatePickerState extends State<DatePicker> {
-
   TextEditingController _dateController = TextEditingController();
 
   @override
@@ -28,25 +29,27 @@ class _DatePickerState extends State<DatePicker> {
               ),
             ),
             readOnly: true,
-            onTap: _selectDate, // Assigning onTap callback here
+            onTap: () async {
+              DateTime? selectedDate = await _selectDate(context);
+              if (selectedDate != null) {
+                widget.onDateSelected?.call(selectedDate);
+                setState(() {
+                  _dateController.text = selectedDate.toString().split(" ")[0];
+                });
+              }
+            },
           ),
         ),
       ),
     );
   }
 
-  Future<void> _selectDate() async {
-    DateTime? _picked = await showDatePicker(
+  Future<DateTime?> _selectDate(BuildContext context) async {
+    return await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(2000),
       lastDate: DateTime(2100),
     );
-
-    if (_picked != null){
-      setState(() {
-        _dateController.text = _picked.toString().split(" ")[0];
-      });
-    }
   }
 }
