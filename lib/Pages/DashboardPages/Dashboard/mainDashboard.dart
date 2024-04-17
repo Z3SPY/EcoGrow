@@ -56,7 +56,8 @@ class _mainDashboardState extends State<mainDashboard> {
         routes: {
           "/ContentPage": (context) => ContentPage(),
           "/CreateEvent": (context) => CreateEventPage(),
-          "/Profile" : (context) => Profile()
+          "/Profile" : (context) => Profile(),
+          "/DonationPage": (context) => DonationPage(),
          },
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -491,200 +492,134 @@ class _ActivitesState extends State<Activites> {
 
 
 
-      //ACTIVITES
-      SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          scrollDirection: Axis.horizontal, // Set scroll direction to horizontal
-          child: Row(
-            children: List.generate(
-              5,
-              (index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0), // Adjust the horizontal padding as needed
+          Wrap(
+          spacing: 8.0, // Spacing between containers horizontally
+          runSpacing: 8.0, // Spacing between rows vertically
+          children: List.generate(6, (index) {
+            return 
+            
+            GestureDetector(
+              onTap: () {
+                // Navigate to different routes based on the index or any other condition
+                if (index % 2 == 0) {
+                  // Redirect to '/donations' for even indices
+                  Navigator.pushNamed(context, "/DonationPage");
+                } else {
+                  // Redirect to '/content' for odd indices
+                  Navigator.pushNamed(context, "/ContentPage");
+                }
+              },
+              child: Padding( 
+                padding: EdgeInsets.all(0),
                 child: 
-                
-                //CARD CONTAINER REPLACE WITH CLASS OR CUSTOM WIDGET
-                GestureDetector( 
-                  onTap: () {
-                    print("Navigate");
-                    Navigator.pushNamed(context, "/ContentPage");
-                    //SHOULD PASS A UNIQUE IDENTIFIER
-
-                  },
-                  child:Container(
-                    decoration: 
-                      BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        image: DecorationImage(
-                          image: AssetImage("assets/landing_back.png"),
-                          fit: BoxFit.cover,
-                          colorFilter: ColorFilter.mode(
-                            Colors.blue.withOpacity(0.1),
-                            BlendMode.overlay,
-                          ),
-                        ),
-                      ),
-
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0),
-                          child: Container(
-                            height: 200,
-                            width: 158,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: const LinearGradient(
-                                begin: Alignment.bottomCenter,
-                                end: Alignment.topCenter,
-                                colors: [
-                                  Color.fromRGBO(5, 134, 40, 0.529),
-                                  Color.fromARGB(176, 255, 255, 255)
-                                ],
+                  Container(
+                    width: MediaQuery.of(context).size.width / 2 - 12, // Adjust width to fit two columns
+                    height: 189, // Adjust height as needed
+                    decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                image: DecorationImage(
+                                  image: AssetImage("assets/landing_back.png"),
+                                  fit: BoxFit.cover,
+                                  colorFilter: ColorFilter.mode(
+                                    Colors.blue.withOpacity(0.1),
+                                    BlendMode.overlay,
+                                  ),
+                                ),
                               ),
-                            ),
+                      alignment: Alignment.center,
+                      child: Padding(
+                            padding: EdgeInsets.all(0),
                             child: Container(
-                              //InnerCard Content
-                              child: const Column( //Could be problematic has const
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  //TITLE
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
-                                    child: Text("Plantings 2024",
-                                      style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white
-                                      ),
-                                    ),
-                                  ),
-                                  //LOCATION
-                                  Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: 20),
-                                    child: Text("Tanay, Rizal",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white60
-                                      )),
-                                  ),
-                                  //DATE
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
-                                    child: Text("June 23, 2024",
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white60
-                                      )),
-                                  ),
-
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.fromLTRB(0, 0, 20, 10),
-                                        child: Text(
-                                          "See More",
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.white60
-                                          ),
+                              width: MediaQuery.of(context).size.width / 2 - 12,
+                              height: 200,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                gradient: const LinearGradient(
+                                  begin: Alignment.bottomCenter,
+                                  end: Alignment.topCenter,
+                                  colors: [
+                                    Color.fromRGBO(5, 134, 40, 0.529),
+                                    Color.fromARGB(176, 255, 255, 255)
+                                  ],
+                                ),
+                              ),
+                              child: Container(
+                                //InnerCard Content
+                                child: const Column( //Could be problematic has const
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    //TITLE
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text("Plantings 2024",
+                                        style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    //LOCATION
+                                    Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: 20),
+                                      child: Text("Tanay, Rizal",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white60
+                                        )),
+                                    ),
+                                    //DATE
+                                    Padding(
+                                      padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                                      child: Text("June 23, 2024",
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white60
+                                        )),
+                                    ),
 
-                                ],
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.fromLTRB(0, 0, 20, 10),
+                                          child: Text(
+                                            "See More",
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white60
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+
+                                  ],
+                                ),
                               ),
                             ),
                           ),
-                        ),
-
-                  ),
-                )
-              ),
-              
-              //AFTER GENERATING A LIST PLOT ALL SPACES IN
-            ).map((widget) {
-              return Row(
-                children: [
-                  widget,
-                  SizedBox(width: 0.0), // Adjust the width as needed
-                ],
-              );
-            }).toList(),
-          )
-
-        ), 
-        
-        //POST TITLE
-        Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
-            child: Row(children: [
-                const Text(
-                "Previous Activites", 
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54
-                ),
-              ),
-
-              const Expanded(child: Divider(
-                thickness: 0,
-                color: Colors.white,
-              )),
-
-              RichText(text: TextSpan(
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green
-                ),
-                text: "See All",
-               recognizer: TapGestureRecognizer()..onTap = () {
-                 //Navigate to previous event
-               }
-              )
-                  
-              )
-              
-            ],) 
-            
-            
-          ),
-        
-
-        //POST LISTS
-        ListView.builder(
-            shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
-                child: Container(
-                  width: 50,
-                  height: 150,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.125),
-                        spreadRadius: 1,
-                        blurRadius: 10,
-                        offset: Offset(0,3)
-                      )
-                    ],
-                    border: Border.all(
-                      color: Colors.white,
-                      width: 2,
                     ),
-                    color: Colors.white,
-                  ),
-                ),
-              );
-            },
-          ),
+
+                    
+
+                
+
+                
+              )
+              
+              
+            );
+            
+          }),
+        )
+      
+        
+        
         
         ]);
   }
