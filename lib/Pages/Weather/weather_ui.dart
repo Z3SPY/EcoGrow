@@ -30,18 +30,25 @@ class _WeatherPageState extends State<WeatherPage> {
   }
 
   String getWeatherAnimations(String? mainCondition) {
-    if (mainCondition == null) return 'assets/sunny.json';
+    if (mainCondition == null) return 'assets/weather/sunny.json';
 
     switch (mainCondition.toLowerCase()) {
       case 'thunderstorm':
+        return 'assets/weather/thunderstorm.json';
       case 'drizzle':
+        return 'assets/weather/drizzle.json';
       case 'rain':
+        return 'assets/weather/thunderstorm.json';
       case 'snow':
+        return 'assets/weather/snow.json';
       case 'atmosphere':
+        return 'assets/weather/atmosphere.json';
       case 'clear':
+        return 'assets/weather/sunny.json';
       case 'clouds':
+        return 'assets/weather/cloud.json';
 
-      default: return 'assets/sunny.json';
+      default: return 'assets/weather/sunny.json';
     }
 
   }

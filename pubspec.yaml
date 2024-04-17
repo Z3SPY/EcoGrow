@@ -82,6 +82,7 @@ flutter:
     - assets/logo_small.png
     - assets/person.png
     - assets/home.png
+    - assets/weather/
 
   #   - images/a_dot_ham.jpeg
 
