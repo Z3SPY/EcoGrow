@@ -86,7 +86,7 @@ class _WeatherState extends State<Weather> {
           decoration: BoxDecoration(
               image: DecorationImage(
                   image: NetworkImage(
-                      "http://openweathermap.org/img/wn/${_weather?._weatherIcon}"))),
+                      "http://openweathermap.org/img/wn/"))),
         )
       ],
     );
