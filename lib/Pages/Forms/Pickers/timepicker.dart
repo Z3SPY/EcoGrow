@@ -8,25 +8,36 @@ class TimePicker extends StatefulWidget {
 }
 
 class _TimePickerState extends State<TimePicker> {
-  @override
-  Widget build(BuildContext context){
-    TimeOfDay selectedTime = TimeOfDay.now();
-    String chosenTime = "Select Time";
-    return Center(child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        Text("${selectedTime.hour}:${selectedTime.minute}"),
-        ElevatedButton(onPressed: () async {
-          final TimeOfDay? timeOfDay = await showTimePicker(context: context, initialTime: selectedTime,
-          initialEntryMode: TimePickerEntryMode.input,);
-          if (timeOfDay != null) {
-            setState(() {
-              selectedTime = timeOfDay; 
-            });
-          }
 
-        }, child: Text(chosenTime))
-      ],
-    ));
+  TimeOfDay _timeOfDay = TimeOfDay.now();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              _timeOfDay.hour.toString() + ':' + _timeOfDay.minute.toString(),
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 30,),
+            MaterialButton(
+              height: 50,
+              minWidth: 150,
+              color: const Color(0xff1D1E22),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(2)),
+              child: const Text('Select Time', style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                _selectTime();
+              },
+
+            )
+          ],
+        ),
+      ),
+    );
   }
 }
