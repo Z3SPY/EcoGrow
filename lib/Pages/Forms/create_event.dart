@@ -24,15 +24,35 @@ class _CreateEventPageState extends State<CreateEventPage> {
   String _eventType = '';
   XFile? _eventImage;
 
-  Future<void> _pickEventLocation() async {
-    // Use Google Maps API to allow the user to pick a location
-    final LatLng? location = await showGoogleMapsLocationPicker(context);
-    if (location != null) {
-      setState(() {
-        _eventLocation = location;
-      });
-    }
+ Future<void> _pickEventLocation() async {
+  // Use Google Maps API to allow the user to pick a location
+  final LatLng? location = await Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (context) => GoogleMapsPlacePicker(
+        apiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
+        initialPosition: const LatLng(37.7749, -122.4194),
+        useCurrentLocation: true,
+        selectInitialPosition: true,
+        usePinPointingSearch: true,
+        usePlaceDetailSearch: true,
+        onPlacePicked: (result) {
+          Navigator.of(context).pop(LatLng(
+            result.latLng.latitude,
+            result.latLng.longitude,
+          ));
+          return;
+        },
+      ),
+    ),
+  );
+
+  if (location != null) {
+    setState(() {
+      _eventLocation = location;
+    });
   }
+}
 
   Future<void> _pickEventImage() async {
     // Use image_picker package to allow the user to pick an image
