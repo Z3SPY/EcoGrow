@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projectui/Pages/DashboardPages/Dashboard/mainDashboard.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
 import 'package:projectui/main.dart';
 
@@ -14,9 +15,10 @@ class _LoginPageState extends State<LoginPage> {
     
     return MaterialApp(
       routes: {
-        "/MainPage": (context) => MyAppPage(),
+        "/MainPage": (context) => mainDashboard(),
         "/Login" : (context) => LoginPage(),
-        "/CreateAccount":(context) => CreateAccountPage()
+        "/CreateAccount":(context) => CreateAccountPage(),
+        
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
