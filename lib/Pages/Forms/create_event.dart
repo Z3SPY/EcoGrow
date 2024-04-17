@@ -71,21 +71,30 @@ Future<void> _selectEndDate(BuildContext context) async {
   );
   if (selectedDate != null) {
     setState(() {
-      _endDateTime = selectedDate;
+      _endDate = selectedDate;
       _endDateController.text = selectedDate.toString().split(" ")[0];
     });
   }
 }
 
 Future <void> _selectStartTime() async {
-    TimeOfDay? _picked = await showTimePicker(context: context, initialTime: _timeOfDay);
+    TimeOfDay? _picked = await showTimePicker(context: context, initialTime: _startDateTime);
 
     if (_picked != null){
       setState(() {
         _startDateTime = _picked;
       });
     }
+  }
 
+  Future <void> _selectEndTime() async {
+    TimeOfDay? _picked = await showTimePicker(context: context, initialTime: _endDateTime);
+
+    if (_picked != null){
+      setState(() {
+        _endDateTime = _picked;
+      });
+    }
   }
 
   Future<void> _pickEventImage() async {
@@ -120,8 +129,8 @@ Future <void> _selectStartTime() async {
         _eventTitleController.clear();
         _eventDescriptionController.clear();
         setState(() {
-          _startDateTime = DateTime.now();
-          _endDateTime = DateTime.now();
+          _startDateTime = TimeOfDay.now();
+          _endDateTime = TimeOfDay.now();
           _startDate = DateTime.now();
           _endDate = DateTime.now();
           _eventLocation = null;
@@ -255,15 +264,37 @@ Padding(
         ),
       ),
       SizedBox(width: 10),
-      Expanded(
-        child: Text(
-          "9:00 PM",
-          style: TextStyle(
-            color: Color.fromRGBO(45, 143, 72, 1),
-            fontWeight: FontWeight.bold,
-          ),
+      Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              _startDateTime.hour.toString().padLeft(2, '0') + ':' + _startDateTime.minute.toString().padLeft(2, '0'),
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 30,),
+            MaterialButton(
+              height: 50,
+              minWidth: 150,
+              color: const Color(0xff1D1E22),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              child: const Text('Select Time', style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                _selectStartTime();
+              },
+
+            )
+          ],
         ),
-      ),
+      // Expanded(
+      //   child: Text(
+      //     "9:00 PM",
+      //     style: TextStyle(
+      //       color: Color.fromRGBO(45, 143, 72, 1),
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
     ],
   ),
 ),
@@ -288,15 +319,37 @@ Padding(
         ),
       ),
       SizedBox(width: 10),
-      Expanded(
-        child: Text(
-          "9:00 PM",
-          style: TextStyle(
-            color: Color.fromRGBO(45, 143, 72, 1),
-            fontWeight: FontWeight.bold,
-          ),
+      Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text(
+              _endDateTime.hour.toString().padLeft(2, '0') + ':' + _endDateTime.minute.toString().padLeft(2, '0'),
+              style: const TextStyle(fontSize: 20),
+            ),
+            const SizedBox(height: 30,),
+            MaterialButton(
+              height: 50,
+              minWidth: 150,
+              color: const Color(0xff1D1E22),
+              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
+              child: const Text('Select Time', style: TextStyle(color: Colors.white),),
+              onPressed: () {
+                _selectEndTime();
+              },
+
+            )
+          ],
         ),
-      ),
+      // Expanded(
+      //   child: Text(
+      //     "9:00 PM",
+      //     style: TextStyle(
+      //       color: Color.fromRGBO(45, 143, 72, 1),
+      //       fontWeight: FontWeight.bold,
+      //     ),
+      //   ),
+      // ),
     ],
   ),
 ),
@@ -394,7 +447,7 @@ Padding(
                       },
                       items: const [
                         DropdownMenuItem(value: 'Tree Planting', child: Text('Tree Planting')),
-                        DropdownMenuItem(value: 'Meetup', child: Text('Meetup')),
+                        DropdownMenuItem(value: 'Feeding Program', child: Text('Feeding Program')),
                         DropdownMenuItem(value: 'Donation Drive', child: Text('Donation Drive')),
                       ],
                       decoration: const InputDecoration(
