@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
 import 'package:projectui/Pages/Forms/login_page.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
+import 'package:projectui/Pages/Weather/weather.dart';
 
 
 void main() {
@@ -36,7 +37,8 @@ class MyAppPage extends StatelessWidget {
         routes: {
           '/Login' : (context) => const LoginPage(),
           '/CreateAccount':(context) => const CreateAccountPage(),
-          '/CreateEvent':(context) => const CreateEventPage()
+          '/CreateEvent':(context) => const CreateEventPage(),
+          '/Weather':(context) => const Weather(),
           
         },
         home: Scaffold(
@@ -53,7 +55,7 @@ class MyAppPage extends StatelessWidget {
 
 void loginClicked(BuildContext context) {
   print("Login Clicked");
-  Navigator.pushNamed(context, '/CreateEvent');
+  Navigator.pushNamed(context, '/Weather');
 }
 
 void registerClicked(BuildContext context) {
