@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import '../GoogleMaps/location_picker.dart';
+
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({super.key});
@@ -25,28 +27,11 @@ class _CreateEventPageState extends State<CreateEventPage> {
   XFile? _eventImage;
 
  Future<void> _pickEventLocation() async {
-  // Use Google Maps API to allow the user to pick a location
+  // Show the MapPicker widget to allow the user to pick a location
   final LatLng? location = await Navigator.push(
     context,
-    MaterialPageRoute(
-      builder: (context) => GoogleMapsPlacePicker(
-        apiKey: 'YOUR_GOOGLE_MAPS_API_KEY',
-        initialPosition: const LatLng(37.7749, -122.4194),
-        useCurrentLocation: true,
-        selectInitialPosition: true,
-        usePinPointingSearch: true,
-        usePlaceDetailSearch: true,
-        onPlacePicked: (result) {
-          Navigator.of(context).pop(LatLng(
-            result.latLng.latitude,
-            result.latLng.longitude,
-          ));
-          return;
-        },
-      ),
-    ),
+    MaterialPageRoute(builder: (context) => MapPicker()),
   );
-
   if (location != null) {
     setState(() {
       _eventLocation = location;
