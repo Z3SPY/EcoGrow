@@ -64,16 +64,40 @@ class _CreateEventPageState extends State<CreateEventPage> {
     }
   }
 
-  TextEditingController _dateController = TextEditingController();
+  TextEditingController _startDateController = TextEditingController();
+TextEditingController _endDateController = TextEditingController();
 
-  Future<DateTime?> _selectDate(BuildContext context) async {
-    return await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2000),
-      lastDate: DateTime(2100),
-    );
+  // Function to select start date
+Future<void> _selectStartDate(BuildContext context) async {
+  final DateTime? selectedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2100),
+  );
+  if (selectedDate != null) {
+    setState(() {
+      _startDateTime = selectedDate;
+      _startDateController.text = selectedDate.toString().split(" ")[0];
+    });
   }
+}
+
+// Function to select end date
+Future<void> _selectEndDate(BuildContext context) async {
+  final DateTime? selectedDate = await showDatePicker(
+    context: context,
+    initialDate: DateTime.now(),
+    firstDate: DateTime(2000),
+    lastDate: DateTime(2100),
+  );
+  if (selectedDate != null) {
+    setState(() {
+      _endDateTime = selectedDate;
+      _endDateController.text = selectedDate.toString().split(" ")[0];
+    });
+  }
+}
 
   Future<void> _pickEventImage() async {
     // Use image_picker package to allow the user to pick an image
@@ -220,60 +244,30 @@ class _CreateEventPageState extends State<CreateEventPage> {
                           ),
                         ),
                         Divider(),
-                       Padding(
+Padding(
   padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
   child: Row(
     children: [
       Text('Start:'),
       SizedBox(width: 10),
       Expanded(
-        child: TextButton(
-          onPressed: () async {
-            _selectStartDateTime();
-            print(_startDateTime);
-          },
-          child: TextField(
-            controller: _dateController,
-            decoration: InputDecoration(
-              labelText: 'DATE',
-              filled: true,
-              prefixIcon: Icon(Icons.calendar_today),
-              enabledBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.green),
-              ),
-            ),
-            readOnly: true,
-            onTap: () async {
-              DateTime? selectedDate = await _selectDate(context);
-              if (selectedDate != null) {
-                setState(() {
-                  _dateController.text = selectedDate.toString().split(" ")[0];
-                });
-              }
-            },
-            style: TextStyle(
-              color: Color.fromRGBO(45, 143, 72, 1),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.grey.withOpacity(0),
+        child: TextFormField(
+          controller: _startDateController,
+          readOnly: true,
+          onTap: () => _selectStartDate(context),
+          decoration: InputDecoration(
+            labelText: 'Start Date',
+            prefixIcon: Icon(Icons.calendar_today),
           ),
         ),
       ),
       SizedBox(width: 10),
       Expanded(
-        child: TextButton(
-          onPressed: () {},
-          child: Text(
-            "9:00 PM",
-            style: TextStyle(
-              color: Color.fromRGBO(45, 143, 72, 1),
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          style: TextButton.styleFrom(
-            backgroundColor: Colors.grey.withOpacity(0),
+        child: Text(
+          "9:00 PM",
+          style: TextStyle(
+            color: Color.fromRGBO(45, 143, 72, 1),
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),
@@ -281,37 +275,40 @@ class _CreateEventPageState extends State<CreateEventPage> {
   ),
 ),
 
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-                          child: Row(
-                            children: [
-                              Text('End:'),
-                              SizedBox(width: 15),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {
-                                    _selectEndDateTime();
-                                    print(_endDateTime);
-                                  },
-                                  child: Text("June 23, 2024",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 143, 72, 1), fontWeight: FontWeight.bold)),
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.withOpacity(0)),
-                                ),
-                              ),
-                              SizedBox(width: 10),
-                              Expanded(
-                                child: ElevatedButton(
-                                  onPressed: () {},
-                                  child: Text("9:00 PM",
-                                      style: TextStyle(
-                                          color: Color.fromRGBO(45, 143, 72, 1), fontWeight: FontWeight.bold)),
-                                  style: ElevatedButton.styleFrom(backgroundColor: Colors.grey.withOpacity(0)),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+// End
+
+  Padding(
+  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+  child: Row(
+    children: [
+      Text('End:'),
+      SizedBox(width: 10),
+      Expanded(
+        child: TextFormField(
+          controller: _endDateController,
+          readOnly: true,
+          onTap: () => _selectEndDate(context),
+          decoration: InputDecoration(
+            labelText: 'End Date',
+            prefixIcon: Icon(Icons.calendar_today),
+          ),
+        ),
+      ),
+      SizedBox(width: 10),
+      Expanded(
+        child: Text(
+          "9:00 PM",
+          style: TextStyle(
+            color: Color.fromRGBO(45, 143, 72, 1),
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+      ),
+    ],
+  ),
+),
+
+
                       ],
                     ),
                   ),
