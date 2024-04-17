@@ -20,36 +20,14 @@ class _CreateEventPageState extends State<CreateEventPage> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final TextEditingController _eventTitleController = TextEditingController();
   final TextEditingController _eventDescriptionController = TextEditingController();
-  DateTime _startDateTime = DateTime.now();
-  DateTime _endDateTime = DateTime.now();
+  TimeOfDay _startDateTime = TimeOfDay.now();
+  TimeOfDay _endDateTime = TimeOfDay.now();
+  DateTime _startDate = DateTime.now();
+  DateTime _endDate = DateTime.now();
   LatLng? _eventLocation;
   String _schoolOrganization = '';
   String _eventType = '';
   XFile? _eventImage;
-
-  Future<void> _selectStartDateTime() async {
-    final newStartDateTime = await showDialog<DateTime>(
-      context: context,
-      builder: (context) => DatePicker(),
-    );
-    if (newStartDateTime != null) {
-      setState(() {
-        _startDateTime = newStartDateTime;
-      });
-    }
-  }
-
-  Future<void> _selectEndDateTime() async {
-    final newEndDateTime = await showDialog<DateTime>(
-      context: context,
-      builder: (context) => DatePicker(),
-    );
-    if (newEndDateTime != null) {
-      setState(() {
-        _endDateTime = newEndDateTime;
-      });
-    }
-  }
 
   Future<void> _pickEventLocation() async {
     // Show the MapPicker widget to allow the user to pick a location
@@ -77,7 +55,7 @@ Future<void> _selectStartDate(BuildContext context) async {
   );
   if (selectedDate != null) {
     setState(() {
-      _startDateTime = selectedDate;
+      _startDate = selectedDate;
       _startDateController.text = selectedDate.toString().split(" ")[0];
     });
   }
@@ -99,6 +77,17 @@ Future<void> _selectEndDate(BuildContext context) async {
   }
 }
 
+Future <void> _selectStartTime() async {
+    TimeOfDay? _picked = await showTimePicker(context: context, initialTime: _timeOfDay);
+
+    if (_picked != null){
+      setState(() {
+        _startDateTime = _picked;
+      });
+    }
+
+  }
+
   Future<void> _pickEventImage() async {
     // Use image_picker package to allow the user to pick an image
     final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
@@ -119,6 +108,8 @@ Future<void> _selectEndDate(BuildContext context) async {
           'description': _eventDescriptionController.text,
           'startDateTime': _startDateTime,
           'endDateTime': _endDateTime,
+          'startDate': _startDate,
+          'endDate': _endDate,
           'location': GeoPoint(_eventLocation?.latitude ?? 0, _eventLocation?.longitude ?? 0),
           'schoolOrganization': _schoolOrganization,
           'eventType': _eventType,
@@ -131,6 +122,8 @@ Future<void> _selectEndDate(BuildContext context) async {
         setState(() {
           _startDateTime = DateTime.now();
           _endDateTime = DateTime.now();
+          _startDate = DateTime.now();
+          _endDate = DateTime.now();
           _eventLocation = null;
           _schoolOrganization = '';
           _eventType = '';
@@ -400,9 +393,9 @@ Padding(
                         });
                       },
                       items: const [
-                        DropdownMenuItem(value: 'Workshop', child: Text('Workshop')),
+                        DropdownMenuItem(value: 'Tree Planting', child: Text('Tree Planting')),
                         DropdownMenuItem(value: 'Meetup', child: Text('Meetup')),
-                        DropdownMenuItem(value: 'Conference', child: Text('Conference')),
+                        DropdownMenuItem(value: 'Donation Drive', child: Text('Donation Drive')),
                       ],
                       decoration: const InputDecoration(
                         hintText: 'Event Type',
