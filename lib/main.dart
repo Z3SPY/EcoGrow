@@ -36,12 +36,12 @@ class MyAppPage extends StatelessWidget {
         //HANDLES ROUTING
         routes: {
           '/Login' : (context) => LoginPage(),
-          '/CreateAccount':(context) => CreateAccountPage()
+          '/CreateAccount':(context) => const CreateAccountPage()
           
         },
         home: Scaffold(
           body: Container(
-              decoration: BoxDecoration(
+              decoration:const BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage("assets/landing_back.png"),
                 fit: BoxFit.cover,
@@ -51,17 +51,17 @@ class MyAppPage extends StatelessWidget {
   }
 }
 
-void LoginClicked(BuildContext context) {
+void loginClicked(BuildContext context) {
   print("Login Clicked");
   Navigator.pushNamed(context, '/Login');
 }
 
-void RegisterClicked(BuildContext context) {
+void registerClicked(BuildContext context) {
   print("Register Clicked");
   Navigator.pushNamed(context, '/CreateAccount');
 }
 
-void GoogleClicked(BuildContext context) {
+void googleClicked(BuildContext context) {
   print("Start OAUTH WINDOW");
 }
 
@@ -121,7 +121,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
 
                   child: ElevatedButton(
                     onPressed: () {
-                      LoginClicked(context);
+                      loginClicked(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: Color.fromRGBO(0, 168, 89,1), // Change the button's background color here
@@ -202,7 +202,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
 
                   child: ElevatedButton(
                     onPressed: () {
-                      GoogleClicked(context);
+                      googleClicked(context);
                     },
                     child: Center(
                       child: RichText(
@@ -253,7 +253,7 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
                       decoration: TextDecoration.underline
                     ),
                     recognizer: TapGestureRecognizer()
-                      ..onTap = () { RegisterClicked(context); },
+                      ..onTap = () { registerClicked(context); },
                   ),
                 ],
                 ),

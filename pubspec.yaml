@@ -38,6 +38,13 @@ dependencies:
   carousel_slider: ^4.2.1
   curved_navigation_bar: ^1.0.3
 
+  # The following are some API's for the application
+  cloud_firestore: ^4.0.0
+  google_maps_flutter: ^2.0.0
+  image_picker: ^0.8.0+6
+  firebase_auth: ^4.19.2
+  google_maps_flutter_platform_interface: ^2.2.5
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
