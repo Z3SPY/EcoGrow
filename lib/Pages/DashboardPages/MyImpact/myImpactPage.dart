@@ -2,6 +2,8 @@ import "package:flutter/material.dart";
 
 
 class impactComp extends StatefulWidget {
+  const impactComp({super.key});
+
   @override
   State<impactComp> createState() => _impactCompState();
 }

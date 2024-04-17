@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
-import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
-import "package:flutter/widgets.dart";
 
 
 class leaderBoardComp extends StatefulWidget {
+  const leaderBoardComp({super.key});
+
   @override
   State<leaderBoardComp> createState() => _leaderBoardCompState();
 }
@@ -57,7 +57,7 @@ class _leaderBoardCompState extends State<leaderBoardComp> {
 class boardList extends StatefulWidget {
   final List<String> items; 
 
-  const boardList({Key? key, required this.items}) : super(key: key);
+  const boardList({super.key, required this.items});
 
   @override
   State<boardList> createState() => _boardListState();
@@ -124,6 +124,8 @@ class _boardListState extends State<boardList> {
 
 //boardGraph Animation
 class boardGraph extends StatefulWidget {
+  const boardGraph({super.key});
+
 
   @override
   State<boardGraph> createState() => _boardGraphState();
@@ -180,7 +182,7 @@ class _boardGraphState extends State<boardGraph> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
+                      colors: const [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
                     ),
                   ),
                 ),
@@ -238,7 +240,7 @@ class _boardGraphState extends State<boardGraph> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
+                      colors: const [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
                     ),
                   ),
                 ),
@@ -300,7 +302,7 @@ class _boardGraphState extends State<boardGraph> {
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
-                      colors: [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
+                      colors: const [Colors.green,Color.fromARGB(255, 119, 192, 98) ,Colors.white],
                     ),
                   ),
                 ),

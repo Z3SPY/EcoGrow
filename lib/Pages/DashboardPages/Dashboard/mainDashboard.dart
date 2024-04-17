@@ -24,18 +24,16 @@ class _mainDashboardState extends State<mainDashboard> {
 
 
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 import 'package:projectui/Pages/Content/content.dart';
-import 'package:projectui/Pages/DashboardPages/LeaderBoard/leaderboardpage.dart';
-import 'package:projectui/Pages/DashboardPages/MyImpact/myimpactpage.dart';
+import 'package:projectui/Pages/DashboardPages/LeaderBoard/leaderBoardPage.dart';
+import 'package:projectui/Pages/DashboardPages/MyImpact/myImpactPage.dart';
 
 
 class mainDashboard extends StatefulWidget {
-  const mainDashboard({Key? key}) : super(key: key);
+  const mainDashboard({super.key});
 
   @override
   State<mainDashboard> createState() => _mainDashboardState();
@@ -46,7 +44,7 @@ class _mainDashboardState extends State<mainDashboard> {
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
-          "/ContentPage": (context) => ContentPage(),
+          "/ContentPage": (context) => const ContentPage(),
          },
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -55,17 +53,17 @@ class _mainDashboardState extends State<mainDashboard> {
             elevation: 0,
             //leading: Icon(Icons.menu),
             actions: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.notifications),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.notifications),
                 visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),), //Notifications
-              IconButton(onPressed: () {}, icon: Icon(Icons.settings),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.settings),
                 visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),), //Settings
-              IconButton(onPressed: () {}, icon: Icon(Icons.circle),
+              IconButton(onPressed: () {}, icon: const Icon(Icons.circle),
                 visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),) //Profile
             ],
 
           ),
-          body: homePage(),
-          bottomNavigationBar: BottomBar(),
+          body: const homePage(),
+          bottomNavigationBar: const BottomBar(),
         ));
   }
 }
@@ -76,7 +74,7 @@ class _mainDashboardState extends State<mainDashboard> {
 class HomeNavBar extends StatefulWidget {
   final Function(int) onIndexChanged;
 
-  const HomeNavBar({required this.onIndexChanged});
+  const HomeNavBar({super.key, required this.onIndexChanged});
 
   @override
   State<HomeNavBar> createState() => _HomeNavBarState();
@@ -127,7 +125,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
       child: ListView.builder(
         itemCount: navItems.length,
         scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.symmetric(horizontal: 0),
+        padding: const EdgeInsets.symmetric(horizontal: 0),
         itemBuilder: ((context, index) => InkWell(
 
           //HANDLE NAVIGATE
@@ -150,24 +148,24 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
               //CIRCLE SPACING
               AnimatedContainer(
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 curve: Curves.fastLinearToSlowEaseIn,
                 width: index == currentIndex ? displayWidth * .50 : displayWidth * .20,
                 child: AnimatedContainer(
-                  duration: Duration(seconds: 1),
+                  duration: const Duration(seconds: 1),
                   curve: Curves.fastLinearToSlowEaseIn,
                   height: index == currentIndex ? displayWidth * .12 : 0,
                   width: index == currentIndex ? displayWidth * .40 : 0,
                   decoration: BoxDecoration(
                     color: index == currentIndex ? 
-                      Color.fromARGB(255, 78, 133, 80) : Colors.transparent,
+                      const Color.fromARGB(255, 78, 133, 80) : Colors.transparent,
                     borderRadius: BorderRadius.circular(10)),
                 ),
               ),
 
               //TEXT SPACING
               AnimatedContainer(
-                duration: Duration(seconds: 1),
+                duration: const Duration(seconds: 1),
                 curve: Curves.fastLinearToSlowEaseIn,
                 width: index == currentIndex ? 
                   displayWidth * .40 : 
@@ -177,7 +175,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
                   children: [
                     Row(children: [
                       AnimatedContainer(
-                        duration: Duration(seconds: 1),
+                        duration: const Duration(seconds: 1),
                         curve: Curves.fastLinearToSlowEaseIn,
                         width:  index == currentIndex ?
                           displayWidth * .13 : 0,
@@ -185,11 +183,11 @@ class _HomeNavBarState extends State<HomeNavBar> {
                         ),
                       AnimatedOpacity(
                         opacity: index == currentIndex ? 1 : 0, 
-                        duration: Duration(seconds: 1),
+                        duration: const Duration(seconds: 1),
                         curve: Curves.fastLinearToSlowEaseIn,
-                        child: Text(index == currentIndex ? '${navItems[index]}'
+                        child: Text(index == currentIndex ? navItems[index]
                           : '',
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                             fontSize: 15
@@ -202,7 +200,7 @@ class _HomeNavBarState extends State<HomeNavBar> {
                     Row (
                       children: [
                         AnimatedContainer(
-                          duration: Duration(seconds: 1),
+                          duration: const Duration(seconds: 1),
                           curve: Curves.fastLinearToSlowEaseIn,
                           width: index == currentIndex ? displayWidth * .03 : 20,  
                         ),
@@ -233,12 +231,14 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
 //BOTTOM BAR HOME PAGE
 class BottomBar extends StatefulWidget {
+  const BottomBar({super.key});
+
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
 
 class _BottomBarState extends State<BottomBar> {
-  int _selectedIndex = 0;
+  final int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -250,13 +250,13 @@ class _BottomBarState extends State<BottomBar> {
         backgroundColor: Colors.white, 
         color: Colors.black,
         animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 600),
+        animationDuration: const Duration(milliseconds: 600),
         onTap: (index) {
         setState(() {
         });
       },
         items: <Widget>[
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Image.asset(
             'assets/home.png',
             color: Colors.white, 
@@ -264,7 +264,7 @@ class _BottomBarState extends State<BottomBar> {
             height: 30,
             ),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
+          Padding(padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Image.asset(
             'assets/person.png',
             color: Colors.white, 
@@ -285,6 +285,8 @@ class _BottomBarState extends State<BottomBar> {
 //THIS IS THE MAIN PAGE CONTAINS MOST OF HTE BULK
 
 class homePage extends StatefulWidget {
+  const homePage({super.key});
+
   @override
   State<homePage> createState() => _homePageState();
 }
@@ -313,7 +315,7 @@ class _homePageState extends State<homePage> {
 
           //TITLE 
           Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -347,7 +349,7 @@ class _homePageState extends State<homePage> {
 
 
           if (_currentIndex == 0) 
-            Activites()
+            const Activites()
           else if (_currentIndex == 1)
             Expanded(child:  leaderBoardComp())
           else 
@@ -373,6 +375,8 @@ class _homePageState extends State<homePage> {
 
 
 class Activites extends StatefulWidget {
+  const Activites({super.key});
+
   @override
   State<Activites> createState() => _ActivitesState();
 }
@@ -388,7 +392,7 @@ class _ActivitesState extends State<Activites> {
 
         //ACTIVITY SEC TITLE
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 0),
             child: Row(children: [
                 const Text(
                 "Latest Activites", 
@@ -404,7 +408,7 @@ class _ActivitesState extends State<Activites> {
               )),
 
               
-              IconButton(onPressed: () {}, icon: Icon(Icons.stacked_bar_chart))
+              IconButton(onPressed: () {}, icon: const Icon(Icons.stacked_bar_chart))
               
             ],) 
               
@@ -414,7 +418,7 @@ class _ActivitesState extends State<Activites> {
 
       //ACTIVITES
       SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
           scrollDirection: Axis.horizontal, // Set scroll direction to horizontal
           child: Row(
             children: List.generate(
@@ -436,7 +440,7 @@ class _ActivitesState extends State<Activites> {
                       BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
                         image: DecorationImage(
-                          image: AssetImage("assets/landing_back.png"),
+                          image: const AssetImage("assets/landing_back.png"),
                           fit: BoxFit.cover,
                           colorFilter: ColorFilter.mode(
                             Colors.blue.withOpacity(0.1),
@@ -446,7 +450,7 @@ class _ActivitesState extends State<Activites> {
                       ),
 
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 0),
+                          padding: const EdgeInsets.symmetric(horizontal: 0),
                           child: Container(
                             height: 200,
                             width: 158,
@@ -531,7 +535,7 @@ class _ActivitesState extends State<Activites> {
               return Row(
                 children: [
                   widget,
-                  SizedBox(width: 0.0), // Adjust the width as needed
+                  const SizedBox(width: 0.0), // Adjust the width as needed
                 ],
               );
             }).toList(),
@@ -541,7 +545,7 @@ class _ActivitesState extends State<Activites> {
         
         //POST TITLE
         Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 20),
+            padding: const EdgeInsets.fromLTRB(20, 10, 20, 20),
             child: Row(children: [
                 const Text(
                 "Previous Activites", 
@@ -578,11 +582,11 @@ class _ActivitesState extends State<Activites> {
         //POST LISTS
         ListView.builder(
             shrinkWrap: true,
-            physics: NeverScrollableScrollPhysics(),
+            physics: const NeverScrollableScrollPhysics(),
             itemCount: items.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 10),
                 child: Container(
                   width: 50,
                   height: 150,
@@ -593,7 +597,7 @@ class _ActivitesState extends State<Activites> {
                         color: Colors.black.withOpacity(0.125),
                         spreadRadius: 1,
                         blurRadius: 10,
-                        offset: Offset(0,3)
+                        offset: const Offset(0,3)
                       )
                     ],
                     border: Border.all(
@@ -624,7 +628,9 @@ class Post {
 }
 
 class ContentCard extends StatefulWidget {
-  final bool? activated = false; //Checks if clicked or not
+  final bool? activated = false;
+
+  const ContentCard({super.key}); //Checks if clicked or not
 
 
   @override
@@ -634,7 +640,7 @@ class ContentCard extends StatefulWidget {
 class _ContentCardState extends State<ContentCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return const Card(
     );
     
   }

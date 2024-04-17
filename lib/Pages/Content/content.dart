@@ -1,9 +1,7 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 
 final List<String> imgList = [
   'assets/forms_back.png',
@@ -18,6 +16,8 @@ final List<String> imgList = [
 final themeMode = ValueNotifier(2);
 
 class ContentPage extends StatelessWidget {
+  const ContentPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return
@@ -73,6 +73,8 @@ final List<Widget> imageSliders = imgList
 
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
+  const CarouselWithIndicatorDemo({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
