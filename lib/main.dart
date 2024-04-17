@@ -9,6 +9,7 @@ import 'package:projectui/Pages/Forms/creat_acc.dart';
 import 'package:projectui/Pages/Forms/login_page.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
 import 'package:projectui/Pages/Weather/weather.dart';
+import 'package:projectui/Pages/Weather/weather_ui.dart';
 
 
 void main() {
@@ -39,6 +40,7 @@ class MyAppPage extends StatelessWidget {
           '/CreateAccount':(context) => const CreateAccountPage(),
           '/CreateEvent':(context) => const CreateEventPage(),
           '/Weather':(context) => const Weather(),
+          '/WeatherPage':(context) => const WeatherPage(),
           
         },
         home: Scaffold(
@@ -55,7 +57,7 @@ class MyAppPage extends StatelessWidget {
 
 void loginClicked(BuildContext context) {
   print("Login Clicked");
-  Navigator.pushNamed(context, '/Weather');
+  Navigator.pushNamed(context, '/WeatherPage');
 }
 
 void registerClicked(BuildContext context) {
