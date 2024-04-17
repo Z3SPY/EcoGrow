@@ -1,3 +1,5 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:projectui/Pages/DashboardPages/Dashboard/mainDashboard.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
@@ -295,19 +297,60 @@ class _FormState extends State<Form> {
                               side: BorderSide(color: Colors.white, width: 2),
                             ),
                           ),
-                          child: const Center(
-                              child: Text(
-                            "Login With Google",
-                            style: TextStyle(
-                                color: Color.fromRGBO(0, 168, 89, 1), fontSize: 17),
+                          child: Center(
+                      child: RichText(
+                        text: TextSpan(children: [
+                          WidgetSpan(
+                              child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5),
+                            child: Image.asset('assets/google.png'),
                           )),
+                          const WidgetSpan(
+                                      child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 2, horizontal: 2),
+                                    child: Text(
+                                      "Continue with Google",
+                                      style: TextStyle(
+                                        color: Colors.blueGrey,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize:
+                                            15, //ISSUE WITH FONT SIZE HERE NEED TO BE RESPONSIVE
+                                      ),
+                                    ),
+                                  ))
+                                ]),
+                              ),
+                            ),
                         ),
                       ),
                     )
-                    )
+                    ),
 
                     //OAUTH END
-
+                    
+              Center(child: Container(
+              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: RichText(
+              text: TextSpan(
+                children: [
+                  const TextSpan(
+                    text: 'Already have an account? ',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                  TextSpan(
+                    text: 'Log in',
+                    style: const TextStyle(color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      decoration: TextDecoration.underline
+                    ),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () { RegisterClicked(context); },
+                  ),
+                ],
+                ),
+              )
+            ))
 
                     
                   ],

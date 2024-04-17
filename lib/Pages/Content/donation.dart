@@ -1,7 +1,9 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 
 final List<String> imgList = [
   'assets/forms_back.png',
@@ -15,26 +17,11 @@ final List<String> imgList = [
 
 final themeMode = ValueNotifier(2);
 
-class ContentPage extends StatelessWidget {
-  const ContentPage({super.key});
-
+class DonationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return
-       Scaffold(
-        floatingActionButton: Container(
-        width: MediaQuery.of(context).size.width * 0.8,
-        margin: EdgeInsets.symmetric(horizontal: 20),
-        child: FloatingActionButton.extended(
-          onPressed: () {
-            // Add functionality for the donate button here
-          },
-          label: Text('Join Event', style: TextStyle(color: Colors.white, fontSize: 20),),
-          backgroundColor: Colors.green,
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: CarouselWithIndicatorDemo());
+       Scaffold(body: CarouselWithIndicatorDemo());
     
   }
 }
@@ -86,8 +73,6 @@ final List<Widget> imageSliders = imgList
 
 
 class CarouselWithIndicatorDemo extends StatefulWidget {
-  const CarouselWithIndicatorDemo({super.key});
-
   @override
   State<StatefulWidget> createState() {
     return _CarouselWithIndicatorState();
@@ -101,6 +86,20 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: Container(
+        width: MediaQuery.of(context).size.width * 0.8,
+        margin: EdgeInsets.symmetric(horizontal: 20),
+        child: FloatingActionButton.extended(
+          onPressed: () {
+            // Add functionality for the donate button here
+          },
+          label: Text('Donate Now', style: TextStyle(color: Colors.white, fontSize: 20),),
+          backgroundColor: Colors.green,
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    
+    
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: AppBar(), // This is an empty app bar
@@ -176,9 +175,45 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   fontWeight: FontWeight.bold,
                   color: Color.fromRGBO(52, 168, 83, 1)
                 ),
+
                 ),// TITLE
+
+                //PROGRESS Bar
+
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [ 
+                    SizedBox(height: 10,),
+                    GreenProgressBar(progress: 0.5),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "40,000",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontSize: 20, // Adjust the font size as needed
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text(
+                          "/10,0000",
+                          style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 20, // Adjust the font size as needed
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    )
+
+                  ]
+                ),
+
+
                 Padding(
-                  padding: EdgeInsets.symmetric(vertical: 5),
+                  padding: EdgeInsets.fromLTRB(0,30, 0, 1 ),
                   child: Text("Organized by: Technological Institue of the Philippines - Manila",
                   style: TextStyle(
                     fontSize: 12,
@@ -187,82 +222,28 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                   ),
                   )
                 ),// Organizer
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-
-                      // Location 
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.location_city,
-                                color: Colors.grey,
-                              )
-                            ),
-                            TextSpan(
-                              text: '     ',
-                              style: TextStyle(color: Colors.transparent)
-                            ),
-                            TextSpan(
-                              text: "Tanay, Rizal",
-                              style: TextStyle(
-                                color: Color.fromRGBO(52, 168, 83, 1),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.italic
-                              )
-                            )
-                          ]
-                        )
-                      
-                      ),
-
-
-                      //DATE
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            WidgetSpan(
-                              child: Icon(Icons.calendar_month,
-                                color: Colors.grey,
-                              )
-                            ),
-                            TextSpan(
-                              text: '     ',
-                              style: TextStyle(color: Colors.transparent)
-                            ),
-                            TextSpan(
-                              text: "June 23, 2024",
-                              style: TextStyle(
-                                color: Color.fromRGBO(52, 168, 83, 1),
-                                fontSize: 18,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.italic
-                              )
-                            )
-                          ]
-                        )
-                      
-                      ),
-                      
-                      
-                    ],
-                  )
-
-                ),
+                
                 
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 15),
-                  child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                  textAlign: TextAlign.justify,),
+                  
+                  padding: EdgeInsets.symmetric(horizontal: 0, vertical: 15),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    child: Text("Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
+                    textAlign: TextAlign.justify,),
+                    decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.2)
+                    ),
+                  )
+                  
+                  
+                  
                 ),
 
+                SizedBox(height: 50,)
 
                 //MAP HOlDER
-                Padding(padding: EdgeInsets.symmetric(vertical: 10), 
+                /*Padding(padding: EdgeInsets.symmetric(vertical: 10), 
                   child: Text("Location",
                     style: TextStyle(
                       color: Color.fromRGBO(52, 168, 83, 1),
@@ -271,22 +252,71 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
                     ),
                   ),
 
-                ),
+                ),*/
 
 
               ],
               )
-            ),
-            
-            SizedBox(height: 50,)
+            )
 
           ],
         )
-
-        
       )
       
       
+    );
+  }
+}
+
+class GreenProgressBar extends StatefulWidget {
+  final double progress; // Progress value between 0.0 and 1.0
+
+  const GreenProgressBar({required this.progress});
+
+  @override
+  State<GreenProgressBar> createState() => _GreenProgressBarState();
+}
+
+class _GreenProgressBarState extends State<GreenProgressBar> {
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: MediaQuery.of(context).size.width * .90,
+      height: 20,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey[300], // Background color of the progress bar
+      ),
+      child: Column(
+      children: [
+      
+        Stack(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width * .90 * widget.progress, // Calculate progress width
+              height: 20,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: Colors.green, // Color of the progress
+              ),
+            ),
+            Align(
+            alignment: Alignment.center,
+            child: Text(
+              '${(widget.progress * 100).toStringAsFixed(0)}%', // Progress percentage
+              style: TextStyle(
+                color: Colors.black,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ],
+        ),  
+        
+
+      ])
+
+
     );
   }
 }

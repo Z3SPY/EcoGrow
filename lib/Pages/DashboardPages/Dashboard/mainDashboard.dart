@@ -30,6 +30,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:projectui/Pages/Content/content.dart';
+import 'package:projectui/Pages/Content/donation.dart';
+import 'package:projectui/Pages/Content/schoolContent.dart';
 import 'package:projectui/Pages/DashboardPages/LeaderBoard/leaderboardpage.dart';
 import 'package:projectui/Pages/DashboardPages/MyImpact/myimpactpage.dart';
 
@@ -47,6 +49,7 @@ class _mainDashboardState extends State<mainDashboard> {
     return MaterialApp(
         routes: {
           "/ContentPage": (context) => ContentPage(),
+          "/SchoolPage": (context) => schoolOrgPage()
          },
         debugShowCheckedModeBanner: false,
         home: Scaffold(
@@ -333,7 +336,7 @@ class _homePageState extends State<homePage> {
                 Text("Let's make impact for the future",
                 style: TextStyle(
                   color: Colors.green[500],
-                  fontSize: 22,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold
                 ),)
               ],
@@ -388,13 +391,13 @@ class _ActivitesState extends State<Activites> {
 
         //ACTIVITY SEC TITLE
           Padding(
-            padding: EdgeInsets.fromLTRB(20, 10, 20, 0),
+            padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Row(children: [
                 const Text(
-                "Latest Activites", 
+                "LATEST ACTIVITES", 
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.black54
+                  color: Colors.black54,
                 ),
               ),
 
@@ -404,8 +407,20 @@ class _ActivitesState extends State<Activites> {
               )),
 
               
-              IconButton(onPressed: () {}, icon: Icon(Icons.stacked_bar_chart))
-              
+              IconButton(
+              padding: EdgeInsets.only(left: 20),
+              icon: Image.asset(
+                "assets/List.png",
+                width: 20, // Adjust the width of the image as needed
+                height: 20, // Adjust the height of the image as needed
+                color: Colors.black, // Optionally, set the color of the image
+              ),
+              onPressed: () {
+                // Add onPressed callback here
+                // This function will be executed when the IconButton is pressed
+              },
+          )
+
             ],) 
               
           ),
@@ -414,7 +429,7 @@ class _ActivitesState extends State<Activites> {
 
       //ACTIVITES
       SingleChildScrollView(
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
           scrollDirection: Axis.horizontal, // Set scroll direction to horizontal
           child: Row(
             children: List.generate(

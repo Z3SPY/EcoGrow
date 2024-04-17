@@ -3,6 +3,8 @@
 import "package:flutter/cupertino.dart";
 import "package:flutter/material.dart";
 import "package:flutter/widgets.dart";
+import "package:projectui/Pages/Content/content.dart";
+import "package:projectui/Pages/Content/schoolContent.dart";
 
 
 class leaderBoardComp extends StatefulWidget {
@@ -161,6 +163,10 @@ class _boardGraphState extends State<boardGraph> {
                 icon: Image.asset('assets/school_logo.png', fit: BoxFit.contain), // Adjust width and height here
                 onPressed: () {
                   // Add your onPressed functionality here
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => schoolOrgPage()),
+                  );
                 },
               ),
             ),
@@ -175,8 +181,9 @@ class _boardGraphState extends State<boardGraph> {
                 alignment: Alignment.bottomCenter, // Align the whole container to the bottom
                 child: Container(
                   width: size[0], // 80% of screen width
-                  height: 80 * 2.0, // Initial height multiplied by scaling factor
+                  height: 50 * 2.0, // Initial height multiplied by scaling factor
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -192,7 +199,7 @@ class _boardGraphState extends State<boardGraph> {
                 padding: EdgeInsets.only(top: 110),
                 child: Column(
                   children: [
-                    Text("400+", style: TextStyle(fontSize: size[1] * .14  , color: Color.fromARGB(255, 252, 113, 0), fontWeight: FontWeight.bold),), 
+                    Text("400+", style: TextStyle(fontSize: size[1] * .14  , color: Colors.black54, fontWeight: FontWeight.bold),), 
                   ],
                 )
                 
@@ -214,7 +221,11 @@ class _boardGraphState extends State<boardGraph> {
               //Images
               GestureDetector(
               onTap: () {
-                // Add your onPressed functionality here
+                
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => schoolOrgPage()),
+                );
               },
               child: Image.asset(
                 'assets/school_logo.png',
@@ -233,8 +244,9 @@ class _boardGraphState extends State<boardGraph> {
                 alignment: Alignment.bottomCenter, // Align the whole container to the bottom
                 child: Container(
                   width: size[1], // 80% of screen width
-                  height: 130 * 2.0, // Initial height multiplied by scaling factor
+                  height: 80 * 2.0, // Initial height multiplied by scaling factor
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -252,7 +264,7 @@ class _boardGraphState extends State<boardGraph> {
                 padding: EdgeInsets.only(top: 150),
                 child: Column(
                   children: [
-                    Text("600+", style: TextStyle(fontSize: size[1] * .20  , color: Color.fromARGB(255, 252, 113, 0), fontWeight: FontWeight.bold),), 
+                    Text("600+", style: TextStyle(fontSize: size[1] * .20  , color: Colors.black54, fontWeight: FontWeight.bold),), 
                   ],
                 )
                 
@@ -278,6 +290,10 @@ class _boardGraphState extends State<boardGraph> {
               child: GestureDetector(
               onTap: () {
                 // Add your onPressed functionality here
+                 Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => schoolOrgPage()),
+                );
               },
               child: Image.asset(
                 'assets/school_logo.png',
@@ -295,8 +311,9 @@ class _boardGraphState extends State<boardGraph> {
                 alignment: Alignment.bottomCenter, // Align the whole container to the bottom
                 child: Container(
                   width: size[2], // 80% of screen width
-                  height: 60 * 2.0, // Initial height multiplied by scaling factor
+                  height: 40 * 2.0, // Initial height multiplied by scaling factor
                   decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
                     gradient: LinearGradient(
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -311,7 +328,7 @@ class _boardGraphState extends State<boardGraph> {
 
               Padding(
                 padding: EdgeInsets.only(top: 80),
-                child: Text("200+", style: TextStyle(fontSize: size[1] * .10  , color: Color.fromARGB(255, 252, 113, 0), fontWeight: FontWeight.bold),), )
+                child: Text("200+", style: TextStyle(fontSize: size[1] * .10  , color: Colors.black54, fontWeight: FontWeight.bold),), )
 
 
 
