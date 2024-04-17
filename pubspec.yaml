@@ -38,6 +38,19 @@ dependencies:
   carousel_slider: ^4.2.1
   curved_navigation_bar: ^1.0.3
 
+  # The following are some API's for the application
+  cloud_firestore: ^4.0.0
+  google_maps_flutter: ^2.2.5
+  image_picker: ^0.8.0+6
+  firebase_auth: ^4.19.2
+  google_maps_flutter_platform_interface: ^2.2.5
+  geolocator: ^11.0.0
+  weather: ^3.1.1
+  intl: ^0.19.0
+  http: ^1.2.1
+  geocoding: ^3.0.0
+  lottie: ^3.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -71,6 +84,7 @@ flutter:
     - assets/school_logo.png
     - assets/wallet.png
     - assets/List.png
+    - assets/weather/
 
   #   - images/a_dot_ham.jpeg
 

@@ -34,6 +34,9 @@ import 'package:projectui/Pages/Content/donation.dart';
 import 'package:projectui/Pages/Content/schoolContent.dart';
 import 'package:projectui/Pages/DashboardPages/LeaderBoard/leaderboardpage.dart';
 import 'package:projectui/Pages/DashboardPages/MyImpact/myimpactpage.dart';
+import 'package:projectui/Pages/Forms/create_event.dart';
+import 'package:projectui/Pages/Profile/profile.dart';
+import 'package:projectui/Pages/Weather/weather.dart';
 
 
 class mainDashboard extends StatefulWidget {
@@ -44,15 +47,47 @@ class mainDashboard extends StatefulWidget {
 }
 
 class _mainDashboardState extends State<mainDashboard> {
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
         routes: {
           "/ContentPage": (context) => ContentPage(),
-          "/SchoolPage": (context) => schoolOrgPage()
+          "/SchoolPage": (context) => schoolOrgPage(),
+          "/CreateEvent": (context) => CreateEventPage(),
+          "/Profile" : (context) => Profile()
          },
         debugShowCheckedModeBanner: false,
         home: Scaffold(
+          
+
+
+          floatingActionButton: Container(
+            
+            child: FloatingActionButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => CreateEventPage()),
+                );
+              },
+              child: Image.asset(
+                'assets/logo_small.png', // Replace 'custom_icon.png' with your image asset path
+                width: 50, // Adjust the width of the image as needed
+                height: 50, // Adjust the height of the image as needed
+              ),
+              backgroundColor: Colors.white, // Background color of FAB
+              elevation: 5, // Remove shadow
+            ),
+          ),
+
+
+
+
+
+
+
           appBar: AppBar(
             //ADD SHADOW
             elevation: 0,
@@ -67,8 +102,18 @@ class _mainDashboardState extends State<mainDashboard> {
             ],
 
           ),
-          body: homePage(),
-          bottomNavigationBar: BottomBar(),
+          body: Container(
+          child: _currentIndex == 0 ? homePage() : Container(),
+        ),
+          
+          bottomNavigationBar: BottomBar(
+            onTabSelected: (index) {
+            setState(() {
+              _currentIndex = index;
+            });
+          },
+
+          ),
         ));
   }
 }
@@ -92,8 +137,6 @@ class _HomeNavBarState extends State<HomeNavBar> {
   var currentIndex = 0;
 
   
-
-
   @override
   Widget build(BuildContext context) {
     double displayWidth = MediaQuery.of(context).size.width ;
@@ -236,6 +279,10 @@ class _HomeNavBarState extends State<HomeNavBar> {
 
 //BOTTOM BAR HOME PAGE
 class BottomBar extends StatefulWidget {
+  final Function(int) onTabSelected;
+
+  const BottomBar({required this.onTabSelected});
+
   @override
   State<BottomBar> createState() => _BottomBarState();
 }
@@ -245,44 +292,43 @@ class _BottomBarState extends State<BottomBar> {
 
   @override
   Widget build(BuildContext context) {
-      return 
-        CurvedNavigationBar(
-        
-        height: 60,
-        index: _selectedIndex,
-        backgroundColor: Colors.white, 
-        color: Colors.black,
-        animationCurve: Curves.easeInOut,
-        animationDuration: Duration(milliseconds: 600),
-        onTap: (index) {
+    return CurvedNavigationBar(
+      height: 60,
+      index: _selectedIndex,
+      backgroundColor: Colors.white,
+      color: Colors.black,
+      animationCurve: Curves.easeInOut,
+      animationDuration: Duration(milliseconds: 600),
+      onTap: (index) {
         setState(() {
+          _selectedIndex = index;
+          widget.onTabSelected(_selectedIndex);
         });
       },
-        items: <Widget>[
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Image.asset(
+      items: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Image.asset(
             'assets/home.png',
-            color: Colors.white, 
+            color: Colors.white,
             width: 100,
             height: 30,
-            ),
           ),
-          Padding(padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Image.asset(
+        ),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
+          child: Image.asset(
             'assets/person.png',
-            color: Colors.white, 
+            color: Colors.white,
             width: 50,
             height: 30,
-            ),
-          )
-            
-          
-
-        ],
-      );
-         
+          ),
+        )
+      ],
+    );
   }
 }
+
 
 //HOME PAGE 
 //THIS IS THE MAIN PAGE CONTAINS MOST OF HTE BULK
@@ -314,6 +360,10 @@ class _homePageState extends State<homePage> {
         scrollDirection: Axis.vertical,
         children: [
 
+          
+
+
+
           //TITLE 
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
@@ -344,10 +394,14 @@ class _homePageState extends State<homePage> {
           ),
           //TITLE END
 
+        
+
           //Inner Navigator
           HomeNavBar(onIndexChanged: updateIndex),
           //Inner Navigator End
 
+
+          
 
           if (_currentIndex == 0) 
             Activites()
@@ -388,6 +442,16 @@ class _ActivitesState extends State<Activites> {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(children: [
+
+
+        //Add WEather API
+        
+        //Weather API
+        Container(
+          height: 200, // Adjust the height as needed
+          child: Weather(),
+        ),
+
 
         //ACTIVITY SEC TITLE
           Padding(
