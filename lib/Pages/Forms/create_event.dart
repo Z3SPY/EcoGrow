@@ -264,28 +264,22 @@ Padding(
         ),
       ),
       SizedBox(width: 10),
-      Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              _startDateTime.hour.toString().padLeft(2, '0') + ':' + _startDateTime.minute.toString().padLeft(2, '0'),
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 30,),
-            MaterialButton(
-              height: 50,
-              minWidth: 150,
-              color: const Color(0xff1D1E22),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              child: const Text('Select Time', style: TextStyle(color: Colors.white),),
-              onPressed: () {
-                _selectStartTime();
-              },
-
-            )
-          ],
-        ),
+       Expanded(
+                      child: ElevatedButton(
+                        onPressed: _selectStartTime,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.access_time),
+                            SizedBox(width: 8.0),
+                            Text(
+                              '${_startDateTime.hour.toString().padLeft(2, '0')}:${_startDateTime.minute.toString().padLeft(2, '0')}',
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
       // Expanded(
       //   child: Text(
       //     "9:00 PM",
@@ -319,28 +313,22 @@ Padding(
         ),
       ),
       SizedBox(width: 10),
-      Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Text(
-              _endDateTime.hour.toString().padLeft(2, '0') + ':' + _endDateTime.minute.toString().padLeft(2, '0'),
-              style: const TextStyle(fontSize: 20),
-            ),
-            const SizedBox(height: 30,),
-            MaterialButton(
-              height: 50,
-              minWidth: 150,
-              color: const Color(0xff1D1E22),
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-              child: const Text('Select Time', style: TextStyle(color: Colors.white),),
-              onPressed: () {
-                _selectEndTime();
-              },
-
-            )
-          ],
-        ),
+       Expanded(
+                      child: ElevatedButton(
+                        onPressed: _selectEndTime,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(Icons.access_time),
+                            SizedBox(width: 8.0),
+                            Text(
+                              '${_endDateTime.hour.toString().padLeft(2, '0')}:${_endDateTime.minute.toString().padLeft(2, '0')}',
+                              style: TextStyle(fontSize: 16.0),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
       // Expanded(
       //   child: Text(
       //     "9:00 PM",
