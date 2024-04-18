@@ -32,7 +32,7 @@ class MyAppPage extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           //CHANGE THIS
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),  
           useMaterial3: true,
         ),
 
@@ -253,11 +253,11 @@ class _HomeScreenStructureState extends State<HomeScreenStructure> {
               text: TextSpan(
                 children: [
                   const TextSpan(
-                    text: 'Already have an account? ',
+                    text: 'Don\'t have an account? ',
                     style: TextStyle(color: Colors.white),
                   ),
                   TextSpan(
-                    text: 'Log in',
+                    text: 'Sign up',
                     style: const TextStyle(color: Colors.blue,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline
