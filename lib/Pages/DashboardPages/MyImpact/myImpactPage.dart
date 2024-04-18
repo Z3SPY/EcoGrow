@@ -48,7 +48,7 @@ class _impactCompState extends State<impactComp> {
                 ],
               ),
 
-              SizedBox(width: 10,),
+              SizedBox(width: 15,),
 
              ElevatedButton(
               onPressed: () {},

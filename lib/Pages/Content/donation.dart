@@ -4,6 +4,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:projectui/Pages/CharityPage/topUp.dart';
 
 final List<String> imgList = [
   'assets/forms_back.png',
@@ -91,7 +92,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicatorDemo> {
         margin: EdgeInsets.symmetric(horizontal: 20),
         child: FloatingActionButton.extended(
           onPressed: () {
-            // Add functionality for the donate button here
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => topUpPage()),
+            );
           },
           label: Text('Donate Now', style: TextStyle(color: Colors.white, fontSize: 20),),
           backgroundColor: Colors.green,
