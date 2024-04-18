@@ -2,7 +2,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:projectui/Pages/Forms/user_auth_implmentation/firebase_auth_servies.dart';
+import 'package:projectui/Pages/Forms/login_page.dart';
+import 'package:projectui/Pages/Forms/user_auth_implmentation/firebase_auth_services.dart';
+import 'package:projectui/main.dart';
 
 class CreateAccountPage extends StatelessWidget {
   const CreateAccountPage({super.key});
@@ -10,8 +12,13 @@ class CreateAccountPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      routes: {
+          '/Login' : (context) => const LoginPage(),
+          '/Main':(context) => const MyAppPage(),
+      },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
@@ -19,7 +26,38 @@ class CreateAccountPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: FormWidget(),
+          child: SingleChildScrollView(
+                  child: Container(
+                    height: MediaQuery.of(context).size.height + 300,
+                    child: Column(children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                          child: Column(
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.fromLTRB(
+                                    5, 30, 0, 2), //NOTE MAKE THIS MORE RESPONSIVE
+                                alignment: Alignment.center,
+                                child: Image.asset('assets/logo.png'),
+                              ),
+                              const Text(
+                                "Cultivating Change by the Students",
+                                style: TextStyle(color: Colors.white, fontSize: 15),
+                              )
+                            ],
+                          ),
+                        ),
+                  
+                  FormWidget(),
+
+                  SizedBox(height: 200,)
+              ],)
+              
+            ),
+          )
+          
+
+
         ),
       ),
     );
@@ -33,6 +71,7 @@ class FormWidget extends StatefulWidget {
 
 class _FormWidgetState extends State<FormWidget> {
   
+  final FirebaseAuthService _auth = FirebaseAuthService();
 
   final TextEditingController schoolNameController = TextEditingController();
   final TextEditingController usernameController = TextEditingController();
@@ -51,8 +90,18 @@ class _FormWidgetState extends State<FormWidget> {
   String get password => passwordController.text;
   set password(String value) => passwordController.text = value;
 
+
+  @override
+  void dispose() {
+    schoolNameController.dispose();
+    usernameController.dispose();
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
   void createAccountClick(BuildContext context) {
-    // Handle create account click event
+    _signUp(context);
   }
 
   @override
@@ -164,6 +213,57 @@ class _FormWidgetState extends State<FormWidget> {
     );
     
   }
+
+  void _signUp(BuildContext context) async {
+    String username = usernameController.text;
+    String email = emailController.text;
+    String password = passwordController.text;
+
+    User? user = await _auth.signUp(email, password);
+
+
+    if (user != null ){
+      print("User Is Successfully Created");
+
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Success'),
+            content: Text('User is successfully created.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, '/Main');
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+    else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to create user.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  } 
+
 }
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -217,5 +317,8 @@ class TextFormFieldWidget extends StatelessWidget {
       ),
     );
   }
+
+
+  
 
 }

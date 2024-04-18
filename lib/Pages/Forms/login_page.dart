@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:projectui/Pages/DashboardPages/Dashboard/mainDashboard.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
+import 'package:projectui/Pages/Forms/user_auth_implmentation/firebase_auth_services.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -13,25 +15,50 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  final FirebaseAuthService _auth = FirebaseAuthService();
+
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     
     return MaterialApp(
       routes: {
         "/MainPage": (context) => const mainDashboard(),
-        "/MainPage": (context) => const mainDashboard(),
         "/Login" : (context) => const LoginPage(),
         "/CreateAccount":(context) => const CreateAccountPage()
       },
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomInset:false,
         body: Container(
           decoration: const BoxDecoration(
                 image: DecorationImage(
               image: AssetImage("assets/forms_back.png"),
               fit: BoxFit.cover,
             )),
-          child: const Form(),
+          child: SingleChildScrollView(
+            child: Container(
+              height: MediaQuery.of(context).size.height + 200,
+              child: Form(
+                emailController: emailController,
+                passwordController: passwordController,
+                auth: _auth,
+
+              ),
+            ),
+          )
         )
 
       )
@@ -39,27 +66,36 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-// FUNCTIONS  
-void LoginFunction(BuildContext context) {
-  Navigator.pushNamed(context, "/MainPage");
-}
-
-void CreateAccountClick(BuildContext context) {
-  print("Clicked Create Account");
-}
-
-// FUNCTIONS END 
 
 
 // MAIN LOGIN FORM
 class Form extends StatefulWidget {
-  const Form({super.key});
+  final TextEditingController emailController;
+  final TextEditingController passwordController;
+  final FirebaseAuthService auth;
+
+  const Form({Key? key, required this.emailController, required this.passwordController, required this.auth}) : super(key: key);
+
 
   @override
   State<Form> createState() => _FormState();
 }
 
 class _FormState extends State<Form> {
+  
+  // FUNCTIONS  
+  void LoginFunction(BuildContext context) {
+    _signUp(context);
+
+  }
+
+  void CreateAccountClick(BuildContext context) {
+    Navigator.pushNamed(context, "/CreateAccount");
+
+  }
+
+  // FUNCTIONS END 
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -133,7 +169,7 @@ class _FormState extends State<Form> {
                             alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                             child: const Text(
-                              "Username",
+                              "Email",
                               style: TextStyle(
                                   fontSize: 15,
                                   color: Colors.white,
@@ -144,13 +180,14 @@ class _FormState extends State<Form> {
                           SizedBox(
                             height: 50,
                             child: TextField(
+                              controller: widget.emailController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
-                                hintText: 'Enter a search term',
+                                hintText: '',
                               ),
                             ),
                           )
@@ -182,13 +219,14 @@ class _FormState extends State<Form> {
                           SizedBox(
                             height: 50,
                             child: TextField(
+                              controller: widget.passwordController,
                               decoration: InputDecoration(
                                 filled: true,
                                 fillColor: Colors.white,
                                 border: OutlineInputBorder(
                                     borderSide: BorderSide.none,
                                     borderRadius: BorderRadius.circular(20)),
-                                hintText: 'Enter a search term',
+                                hintText: '',
                               ),
                             ),
                           )
@@ -333,16 +371,16 @@ class _FormState extends State<Form> {
                     //OAUTH END
                     
               Center(child: Container(
-              padding: EdgeInsets.fromLTRB(0, 0, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
               child: RichText(
               text: TextSpan(
                 children: [
                   const TextSpan(
-                    text: 'Already have an account? ',
+                    text: "Don't have an account? ",
                     style: TextStyle(color: Colors.white),
                   ),
                   TextSpan(
-                    text: 'Log in',
+                    text: 'Sign Up',
                     style: const TextStyle(color: Colors.white,
                       fontWeight: FontWeight.bold,
                       decoration: TextDecoration.underline
@@ -350,7 +388,7 @@ class _FormState extends State<Form> {
                     recognizer: TapGestureRecognizer()
                       ..onTap = () { 
 
-                        Navigator.pushNamed(context, "/Login");
+                        Navigator.pushNamed(context, "/CreateAccount");
                         
                        },
                   ),
@@ -366,7 +404,9 @@ class _FormState extends State<Form> {
 
         ),
 
-        Expanded(child: Container())
+          Expanded(
+            flex: 2,
+            child: Container()), // This is the change
             
 
 
@@ -375,5 +415,45 @@ class _FormState extends State<Form> {
       
       
     );
+
+    
   }
+  
+
+
+  void _signUp(BuildContext context) async {
+    String email = widget.emailController.text;
+    String password = widget.passwordController.text;
+
+    print(email);
+    print(password);
+
+    User? user = await widget.auth.signIn(email, password);
+
+
+    if (user != null ){
+      print("User Is Successfully Created");
+      Navigator.pushNamed(context, "/MainPage");
+    }
+    else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Failed to login.'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
+  } 
+
 }
