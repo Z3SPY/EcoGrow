@@ -9,6 +9,10 @@ import '../GoogleMaps/location_picker.dart';
 import './Pickers/datepicker.dart';
 import './Pickers/timepicker.dart';
 
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+  CollectionReference eventsCollection = firestore.collection('events');
+
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({Key? key}) : super(key: key);
 
@@ -28,6 +32,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   String _schoolOrganization = '';
   String _eventType = '';
   XFile? _eventImage;
+
+
 
   Future<void> _pickEventLocation() async {
     // Show the MapPicker widget to allow the user to pick a location

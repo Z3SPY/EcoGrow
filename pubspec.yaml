@@ -37,16 +37,15 @@ dependencies:
   flutter_svg: ^2.0.10+1
   carousel_slider: ^4.2.1
   curved_navigation_bar: ^1.0.3
-  firebase_core: any
+  firebase_core: ^2.30.0
   cloud_firestore: ^4.8.2
   firebase_auth: ^4.6.3
   firebase_storage: ^11.2.4
 
   # The following are some API's for the application
-  cloud_firestore: ^4.0.0
+  # Remove the duplicate entry for cloud_firestore
   google_maps_flutter: ^2.2.5
   image_picker: ^0.8.0+6
-  firebase_auth: ^4.19.2
   google_maps_flutter_platform_interface: ^2.2.5
   geolocator: ^8.2.0
 

@@ -10,9 +10,12 @@ import 'package:projectui/Pages/Forms/login_page.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
 import 'package:projectui/Pages/Forms/Pickers/timepicker.dart';
 import 'package:projectui/Pages/Forms/Pickers/datepicker.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyAppPage());
 }
 
