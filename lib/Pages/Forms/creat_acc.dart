@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,28 +19,25 @@ class CreateAccountPage extends StatelessWidget {
               fit: BoxFit.cover,
             ),
           ),
-          child: Form(),
+          child: FormWidget(),
         ),
       ),
     );
   }
 }
 
-class Form extends StatefulWidget {
+class FormWidget extends StatefulWidget {
   @override
-  State<Form> createState() => _FormState();
+  State<FormWidget> createState() => _FormWidgetState();
 }
 
-void CreateAccountClick(BuildContext context) {
-  print("Clicked Create Account");
-}
+class _FormWidgetState extends State<FormWidget> {
+  
 
-class _FormState extends State<Form> {
-  final FirebaseAuthService auth = FirebaseAuthService();
-  TextEditingController schoolNameController = TextEditingController();
-  TextEditingController usernameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController schoolNameController = TextEditingController();
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
   String get schoolName => schoolNameController.text;
   set schoolName(String value) => schoolNameController.text = value;
@@ -52,6 +50,10 @@ class _FormState extends State<Form> {
 
   String get password => passwordController.text;
   set password(String value) => passwordController.text = value;
+
+  void createAccountClick(BuildContext context) {
+    // Handle create account click event
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,172 +90,42 @@ class _FormState extends State<Form> {
               ),
             ),
 
-            //Name of School
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Column(
-                children: [
-                  //INNER FORM
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: const Text(
-                      "Name of School",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: schoolNameController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter name of school',
-                      ),
-                    ),
-                  ),
-                  //INNER FORM END
-                ],
-              ),
-            ),
-            //NAME OF SCHOOL END
-
-            //Name
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Column(
-                children: [
-                  //INNER FORM
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: const Text(
-                      "Username",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: usernameController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter username',
-                      ),
-                    ),
-                  ),
-                  //INNER FORM END
-                ],
-              ),
+            // Name of School
+            TextFormFieldWidget(
+              labelText: "Name of School",
+              controller: schoolNameController,
+              hintText: "Enter name of school",
             ),
 
-            //NAME END
-
-            //Email
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Column(
-                children: [
-                  //INNER FORM
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: const Text(
-                      "Email",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: emailController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter email',
-                      ),
-                    ),
-                  ),
-                  //INNER FORM END
-                ],
-              ),
+            // Username
+            TextFormFieldWidget(
+              labelText: "Username",
+              controller: usernameController,
+              hintText: "Enter username",
             ),
-            //EMAIL END
 
-            //PASSWORD
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-              child: Column(
-                children: [
-                  //INNER FORM
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    child: const Text(
-                      "Password",
-                      style: TextStyle(
-                        fontSize: 15,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 50,
-                    child: TextField(
-                      controller: passwordController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Colors.white,
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        hintText: 'Enter password',
-                      ),
-                    ),
-                  ),
-                  //INNER FORM END
-                ],
-              ),
+            // Email
+            TextFormFieldWidget(
+              labelText: "Email",
+              controller: emailController,
+              hintText: "Enter email",
             ),
-            //PASSWORD END
 
-            //CREATE ACCOUNT
+            // Password
+            TextFormFieldWidget(
+              labelText: "Password",
+              controller: passwordController,
+              hintText: "Enter password",
+              obscureText: true,
+            ),
+
+            // CREATE ACCOUNT Button
             Center(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
                 child: Container(
                   width: 300,
                   height: 50,
-                  //DECORATION
-
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     border: Border.all(
@@ -262,20 +134,18 @@ class _FormState extends State<Form> {
                     ),
                     color: Colors.white,
                   ),
-
                   child: ElevatedButton(
                     onPressed: () {
-                      CreateAccountClick(context);
+                      createAccountClick(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors
-                          .white, // Change the button's background color here
+                      backgroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(30),
                         side: BorderSide(color: Colors.white, width: 2),
                       ),
                     ),
-                    child: const Center(
+                    child: Center(
                       child: Text(
                         "Create Account",
                         style: TextStyle(
@@ -288,11 +158,64 @@ class _FormState extends State<Form> {
                 ),
               ),
             )
-
-            //CREATE ACCOUNT END
           ],
         ),
       ),
     );
+    
   }
+}
+
+class TextFormFieldWidget extends StatelessWidget {
+  final String labelText;
+  final TextEditingController controller;
+  final String hintText;
+  final bool obscureText;
+
+  const TextFormFieldWidget({
+    required this.labelText,
+    required this.controller,
+    required this.hintText,
+    this.obscureText = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      child: Column(
+        children: [
+          Container(
+            alignment: Alignment.centerLeft,
+            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Text(
+              labelText,
+              style: TextStyle(
+                fontSize: 15,
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 50,
+            child: TextField(
+              controller: controller,
+              obscureText: obscureText,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                hintText: hintText,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
 }

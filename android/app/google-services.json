@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "241095022386",
+    "project_id": "ecogrow-accounts",
+    "storage_bucket": "ecogrow-accounts.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:241095022386:android:0d12d3cb6170bd5b15692b",
+        "android_client_info": {
+          "package_name": "com.example.ecogrow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "241095022386-4a7pcaks7nut12b5boi9pcsj9joalv4r.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8mte1h9VRXxw7ptxjd97D8R8K6FHYZzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "241095022386-4a7pcaks7nut12b5boi9pcsj9joalv4r.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
