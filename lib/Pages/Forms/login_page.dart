@@ -3,7 +3,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:projectui/Pages/DashboardPages/Dashboard/mainDashboard.dart';
 import 'package:projectui/Pages/Forms/creat_acc.dart';
-import 'package:projectui/main.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +18,7 @@ class _LoginPageState extends State<LoginPage> {
     
     return MaterialApp(
       routes: {
+        "/MainPage": (context) => const mainDashboard(),
         "/MainPage": (context) => const mainDashboard(),
         "/Login" : (context) => const LoginPage(),
         "/CreateAccount":(context) => const CreateAccountPage()

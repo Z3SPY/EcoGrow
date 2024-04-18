@@ -10,6 +10,8 @@ import 'package:projectui/Pages/Forms/login_page.dart';
 import 'package:projectui/Pages/Forms/create_event.dart';
 import 'package:projectui/Pages/Weather/weather.dart';
 import 'package:projectui/Pages/Weather/weather_ui.dart';
+import 'package:projectui/Pages/Forms/Pickers/timepicker.dart';
+import 'package:projectui/Pages/Forms/Pickers/datepicker.dart';
 
 
 void main() {
@@ -39,13 +41,13 @@ class MyAppPage extends StatelessWidget {
           '/Login' : (context) => const LoginPage(),
           '/CreateAccount':(context) => const CreateAccountPage(),
           '/CreateEvent':(context) => const CreateEventPage(),
-          '/Weather':(context) => const Weather(),
-          '/WeatherPage':(context) => const WeatherPage(),
+          '/TimePicker':(context) => const TimePicker(),
+          '/DatePicker':(context) => const DatePicker(),
           
         },
         home: Scaffold(
           body: Container(
-              decoration:const BoxDecoration(
+              decoration: const BoxDecoration(
                   image: DecorationImage(
                 image: AssetImage("assets/landing_back.png"),
                 fit: BoxFit.cover,
@@ -67,10 +69,12 @@ void registerClicked(BuildContext context) {
 
 void googleClicked(BuildContext context) {
   print("Start OAUTH WINDOW");
+  Navigator.pushNamed(context, '/TimePicker');
 }
 
 class HomeScreenStructure extends StatefulWidget {
   const HomeScreenStructure({super.key});
+
 
   @override
   State<HomeScreenStructure> createState() => _HomeScreenStructureState();
