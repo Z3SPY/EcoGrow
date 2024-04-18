@@ -300,7 +300,7 @@ class _FormState extends State<Form> {
                           ),
                           child: const Center(
                               child: Text(
-                            "Login With Google",
+                            "Sign up",
                             style: TextStyle(
                                 color: Color.fromRGBO(0, 168, 89, 1), fontSize: 17),
                           )),

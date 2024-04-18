@@ -37,6 +37,10 @@ dependencies:
   flutter_svg: ^2.0.10+1
   carousel_slider: ^4.2.1
   curved_navigation_bar: ^1.0.3
+  firebase_core: any
+  cloud_firestore: ^4.8.2
+  firebase_auth: ^4.6.3
+  firebase_storage: ^11.2.4
 
   # The following are some API's for the application
   cloud_firestore: ^4.0.0
