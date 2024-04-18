@@ -108,39 +108,52 @@ Future <void> _selectStartTime() async {
   }
 
   Future<void> _saveEvent() async {
-    if (_formKey.currentState?.validate() ?? false) {
-      // Save the event data to Firebase
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await FirebaseFirestore.instance.collection('events').add({
-          'title': _eventTitleController.text,
-          'description': _eventDescriptionController.text,
-          'startDateTime': _startDateTime,
-          'endDateTime': _endDateTime,
-          'startDate': _startDate,
-          'endDate': _endDate,
-          'location': GeoPoint(_eventLocation?.latitude ?? 0, _eventLocation?.longitude ?? 0),
-          'schoolOrganization': _schoolOrganization,
-          'eventType': _eventType,
-          'createdBy': user.uid,
-          'imageUrl': await _uploadEventImage(),
-        });
-        // Clear the form fields
-        _eventTitleController.clear();
-        _eventDescriptionController.clear();
-        setState(() {
-          _startDateTime = TimeOfDay.now();
-          _endDateTime = TimeOfDay.now();
-          _startDate = DateTime.now();
-          _endDate = DateTime.now();
-          _eventLocation = null;
-          _schoolOrganization = '';
-          _eventType = '';
-          _eventImage = null;
-        });
-      }
+  if (_formKey.currentState?.validate() ?? false) {
+    // Print the event data for checking
+    print('Event Title: ${_eventTitleController.text}');
+    print('Event Description: ${_eventDescriptionController.text}');
+    print('Start DateTime: $_startDateTime');
+    print('End DateTime: $_endDateTime');
+    print('Start Date: ${_startDate.toString().split(" ")[0]}'); // Extract date part
+    print('End Date: ${_endDate.toString().split(" ")[0]}'); // Extract date part
+    print('Location: $_eventLocation');
+    print('School/Organization: $_schoolOrganization');
+    print('Event Type: $_eventType');
+
+    // Save the event data to Firebase
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('events').add({
+        'title': _eventTitleController.text,
+        'description': _eventDescriptionController.text,
+        'startDateTime': _startDateTime,
+        'endDateTime': _endDateTime,
+        'startDate': _startDate.toString().split(" ")[0],
+        'endDate': _endDate.toString().split(" ")[0],
+        'location': GeoPoint(_eventLocation?.latitude ?? 0, _eventLocation?.longitude ?? 0),
+        'schoolOrganization': _schoolOrganization,
+        'eventType': _eventType,
+        'createdBy': user.uid,
+        'imageUrl': await _uploadEventImage(),
+      });
+      // Clear the form fields
+      _eventTitleController.clear();
+      _eventDescriptionController.clear();
+      setState(() {
+        _startDateTime = TimeOfDay.now();
+        _endDateTime = TimeOfDay.now();
+        _startDate = DateTime.now();
+        _endDate = DateTime.now();
+        _eventLocation = null;
+        _schoolOrganization = '';
+        _eventType = '';
+        _eventImage = null;
+      });
     }
   }
+}
+
+
 
   Future<String?> _uploadEventImage() async {
     // Use Cloudinary or any other image hosting service to upload the event image
