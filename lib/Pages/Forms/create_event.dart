@@ -8,10 +8,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import '../GoogleMaps/location_picker.dart';
 import './Pickers/datepicker.dart';
 import './Pickers/timepicker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  CollectionReference eventsCollection = firestore.collection('events');
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+CollectionReference eventsCollection = firestore.collection('events');
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({Key? key}) : super(key: key);
@@ -102,6 +103,23 @@ Future <void> _selectStartTime() async {
       });
     }
   }
+
+  Future<String> _uploadEventImage() async {
+  if (_eventImage == null) return '';
+
+  final metadata = firebase_storage.SettableMetadata(
+    contentType: 'image/jpeg',
+  );
+
+  final storageRef = firebase_storage.FirebaseStorage.instance
+      .ref()
+      .child('event_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+  final uploadTask = storageRef.putData(await _eventImage!.readAsBytes(), metadata);
+  final snapshot = await uploadTask.whenComplete(() {});
+
+  return await snapshot.ref.getDownloadURL();
+}
 
   Future<void> _pickEventImage() async {
     // Use image_picker package to allow the user to pick an image
@@ -471,7 +489,7 @@ Padding(
                   ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: _pickEventImage,
+                    onPressed: _uploadEventImage,
                     child: const Text('Upload Event Image'),
                   ),
                   const SizedBox(height: 16.0),
