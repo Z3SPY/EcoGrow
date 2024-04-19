@@ -32,9 +32,6 @@ class _CreateEventPageState extends State<CreateEventPage> {
   String _schoolOrganization = '';
   String _eventType = '';
   List<XFile>? _eventImages;
-  
-
-
 
   Future<void> _pickEventLocation() async {
     // Show the MapPicker widget to allow the user to pick a location
@@ -119,9 +116,10 @@ Future <void> _selectStartTime() async {
   return await snapshot.ref.getDownloadURL();
 }
 
-  Future<void> _pickEventImages() async {
+ Future<void> _pickEventImages() async {
   final List<XFile>? images = await ImagePicker().pickMultiImage();
   if (images != null) {
+    print('Selected images count: ${images.length}'); // Debug print
     setState(() {
       _eventImages = images;
     });
@@ -145,13 +143,15 @@ Future <void> _selectStartTime() async {
     // Save the event data to Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-List<String> imageUrls = [];
+      List<String> imageUrls = [];
 
       // Upload multiple images if _eventImages is not empty
       if (_eventImages != null && _eventImages!.isNotEmpty) {
+        print('Number of images to upload: ${_eventImages?.length}');
         for (var image in _eventImages!.cast<XFile>()) {
           String imageUrl = await _uploadEventImage(image);
           imageUrls.add(imageUrl);
+          print('Uploaded image URL: $imageUrl');
         }
       }
 
