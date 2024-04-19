@@ -143,22 +143,27 @@ Future <void> _selectStartTime() async {
     print('Location: $_eventLocation');
     print('School/Organization: $_schoolOrganization');
     print('Event Type: $_eventType');
+    print('Event Image: $_uploadEventImage()');
 
     // Save the event data to Firebase
-    final user = FirebaseAuth.instance.currentUser;
+      final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+      final imageUrl = await _uploadEventImage();
+
       await FirebaseFirestore.instance.collection('events').add({
         'title': _eventTitleController.text,
         'description': _eventDescriptionController.text,
-        'startDateTime': _startDateTime,
-        'endDateTime': _endDateTime,
+        'startDateTime': _startDateTime.toString(),
+        'endDateTime': _endDateTime.toString(),
         'startDate': _startDate.toString().split(" ")[0],
         'endDate': _endDate.toString().split(" ")[0],
-        'location': GeoPoint(_eventLocation?.latitude ?? 0, _eventLocation?.longitude ?? 0),
+        'location': _eventLocation?.latitude != null && _eventLocation?.longitude != null
+            ? GeoPoint(_eventLocation!.latitude, _eventLocation!.longitude)
+            : null,
         'schoolOrganization': _schoolOrganization,
         'eventType': _eventType,
         'createdBy': user.uid,
-        'imageUrl': await _uploadEventImage(),
+        'imageUrl': imageUrl,
       });
       // Clear the form fields
       _eventTitleController.clear();
@@ -177,16 +182,6 @@ Future <void> _selectStartTime() async {
   }
 }
 
-
-
-  Future<String?> _uploadEventImage() async {
-    // Use Cloudinary or any other image hosting service to upload the event image
-    if (_eventImage != null) {
-      // Upload the image and get the URL
-      return 'https://example.com/event-image.jpg';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
