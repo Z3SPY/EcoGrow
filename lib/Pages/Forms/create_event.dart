@@ -6,12 +6,12 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../GoogleMaps/location_picker.dart';
-import './Pickers/datepicker.dart';
-import './Pickers/timepicker.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:io';
 
 
-  FirebaseFirestore firestore = FirebaseFirestore.instance;
-  CollectionReference eventsCollection = firestore.collection('events');
+FirebaseFirestore firestore = FirebaseFirestore.instance;
+CollectionReference eventsCollection = firestore.collection('events');
 
 class CreateEventPage extends StatefulWidget {
   const CreateEventPage({Key? key}) : super(key: key);
@@ -31,9 +31,7 @@ class _CreateEventPageState extends State<CreateEventPage> {
   LatLng? _eventLocation;
   String _schoolOrganization = '';
   String _eventType = '';
-  XFile? _eventImage;
-
-
+  List<XFile>? _eventImages;
 
   Future<void> _pickEventLocation() async {
     // Show the MapPicker widget to allow the user to pick a location
@@ -103,15 +101,30 @@ Future <void> _selectStartTime() async {
     }
   }
 
-  Future<void> _pickEventImage() async {
-    // Use image_picker package to allow the user to pick an image
-    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _eventImage = image;
-      });
-    }
+  Future<String> _uploadEventImage(XFile image) async {
+  final metadata = firebase_storage.SettableMetadata(
+    contentType: 'image/jpeg',
+  );
+
+  final storageRef = firebase_storage.FirebaseStorage.instance
+      .ref()
+      .child('event_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+  final uploadTask = storageRef.putData(await image.readAsBytes(), metadata);
+  final snapshot = await uploadTask.whenComplete(() {});
+
+  return await snapshot.ref.getDownloadURL();
+}
+
+ Future<void> _pickEventImages() async {
+  final List<XFile>? images = await ImagePicker().pickMultiImage();
+  if (images != null) {
+    print('Selected images count: ${images.length}'); // Debug print
+    setState(() {
+      _eventImages = images;
+    });
   }
+}
 
   Future<void> _saveEvent() async {
   if (_formKey.currentState?.validate() ?? false) {
@@ -125,23 +138,38 @@ Future <void> _selectStartTime() async {
     print('Location: $_eventLocation');
     print('School/Organization: $_schoolOrganization');
     print('Event Type: $_eventType');
+    print('Event Image: $_uploadEventImage()');
 
     // Save the event data to Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
+      List<String> imageUrls = [];
+
+      // Upload multiple images if _eventImages is not empty
+      if (_eventImages != null && _eventImages!.isNotEmpty) {
+        print('Number of images to upload: ${_eventImages?.length}');
+        for (var image in _eventImages!.cast<XFile>()) {
+          String imageUrl = await _uploadEventImage(image);
+          imageUrls.add(imageUrl);
+          print('Uploaded image URL: $imageUrl');
+        }
+      }
+
       await FirebaseFirestore.instance.collection('events').add({
-        'title': _eventTitleController.text,
-        'description': _eventDescriptionController.text,
-        'startDateTime': _startDateTime,
-        'endDateTime': _endDateTime,
-        'startDate': _startDate.toString().split(" ")[0],
-        'endDate': _endDate.toString().split(" ")[0],
-        'location': GeoPoint(_eventLocation?.latitude ?? 0, _eventLocation?.longitude ?? 0),
-        'schoolOrganization': _schoolOrganization,
-        'eventType': _eventType,
-        'createdBy': user.uid,
-        'imageUrl': await _uploadEventImage(),
-      });
+  'title': _eventTitleController.text,
+  'description': _eventDescriptionController.text,
+  'startDateTime': _startDateTime.toString(),
+  'endDateTime': _endDateTime.toString(),
+  'startDate': _startDate.toString().split(" ")[0],
+  'endDate': _endDate.toString().split(" ")[0],
+  'location': _eventLocation?.latitude != null && _eventLocation?.longitude != null
+      ? GeoPoint(_eventLocation!.latitude, _eventLocation!.longitude)
+      : null,
+  'schoolOrganization': _schoolOrganization,
+  'eventType': _eventType,
+  'createdBy': user.uid,
+  'imageUrls': imageUrls,
+});
       // Clear the form fields
       _eventTitleController.clear();
       _eventDescriptionController.clear();
@@ -153,22 +181,14 @@ Future <void> _selectStartTime() async {
         _eventLocation = null;
         _schoolOrganization = '';
         _eventType = '';
-        _eventImage = null;
+        _eventImages = null; 
       });
+      Navigator.pop(context);
     }
+  
   }
 }
 
-
-
-  Future<String?> _uploadEventImage() async {
-    // Use Cloudinary or any other image hosting service to upload the event image
-    if (_eventImage != null) {
-      // Upload the image and get the URL
-      return 'https://example.com/event-image.jpg';
-    }
-    return null;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -469,11 +489,39 @@ Padding(
                       },
                     ),
                   ),
+                  GridView.builder(
+  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 3,
+    crossAxisSpacing: 8,
+    mainAxisSpacing: 8,
+  ),
+  itemCount: _eventImages?.length ?? 0,
+  itemBuilder: (context, index) {
+    return Image.file(
+      File(_eventImages![index].path),
+      fit: BoxFit.cover,
+    );
+  },
+),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: _pickEventImage,
+                    onPressed: _pickEventImages,
                     child: const Text('Upload Event Image'),
                   ),
+//                   GridView.builder(
+//   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//     crossAxisCount: 3,
+//     crossAxisSpacing: 8,
+//     mainAxisSpacing: 8,
+//   ),
+//   itemCount: _eventImages?.length ?? 0,
+//   itemBuilder: (context, index) {
+//     return Image.file(
+//       File(_eventImages![index].path),
+//       fit: BoxFit.cover,
+//     );
+//   },
+// ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: _saveEvent,
