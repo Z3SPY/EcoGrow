@@ -146,9 +146,12 @@ Future <void> _selectStartTime() async {
     print('Event Image: $_uploadEventImage()');
 
     // Save the event data to Firebase
-      final user = FirebaseAuth.instance.currentUser;
+    final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      final imageUrl = await _uploadEventImage();
+      String imageUrl = '';
+      if (_eventImage != null) {
+        imageUrl = await _uploadEventImage();
+      }
 
       await FirebaseFirestore.instance.collection('events').add({
         'title': _eventTitleController.text,
@@ -178,7 +181,9 @@ Future <void> _selectStartTime() async {
         _eventType = '';
         _eventImage = null;
       });
+      Navigator.pop(context);
     }
+  
   }
 }
 
@@ -484,7 +489,7 @@ Padding(
                   ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: _uploadEventImage,
+                    onPressed: _pickEventImage,
                     child: const Text('Upload Event Image'),
                   ),
                   const SizedBox(height: 16.0),
