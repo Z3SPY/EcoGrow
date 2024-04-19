@@ -6,9 +6,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../GoogleMaps/location_picker.dart';
-import './Pickers/datepicker.dart';
-import './Pickers/timepicker.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'dart:io';
 
 
 FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -32,7 +31,8 @@ class _CreateEventPageState extends State<CreateEventPage> {
   LatLng? _eventLocation;
   String _schoolOrganization = '';
   String _eventType = '';
-  XFile? _eventImage;
+  List<XFile>? _eventImages;
+  
 
 
 
@@ -104,9 +104,7 @@ Future <void> _selectStartTime() async {
     }
   }
 
-  Future<String> _uploadEventImage() async {
-  if (_eventImage == null) return '';
-
+  Future<String> _uploadEventImage(XFile image) async {
   final metadata = firebase_storage.SettableMetadata(
     contentType: 'image/jpeg',
   );
@@ -115,21 +113,20 @@ Future <void> _selectStartTime() async {
       .ref()
       .child('event_images/${DateTime.now().millisecondsSinceEpoch}.jpg');
 
-  final uploadTask = storageRef.putData(await _eventImage!.readAsBytes(), metadata);
+  final uploadTask = storageRef.putData(await image.readAsBytes(), metadata);
   final snapshot = await uploadTask.whenComplete(() {});
 
   return await snapshot.ref.getDownloadURL();
 }
 
-  Future<void> _pickEventImage() async {
-    // Use image_picker package to allow the user to pick an image
-    final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      setState(() {
-        _eventImage = image;
-      });
-    }
+  Future<void> _pickEventImages() async {
+  final List<XFile>? images = await ImagePicker().pickMultiImage();
+  if (images != null) {
+    setState(() {
+      _eventImages = images;
+    });
   }
+}
 
   Future<void> _saveEvent() async {
   if (_formKey.currentState?.validate() ?? false) {
@@ -148,26 +145,31 @@ Future <void> _selectStartTime() async {
     // Save the event data to Firebase
     final user = FirebaseAuth.instance.currentUser;
     if (user != null) {
-      String imageUrl = '';
-      if (_eventImage != null) {
-        imageUrl = await _uploadEventImage();
+List<String> imageUrls = [];
+
+      // Upload multiple images if _eventImages is not empty
+      if (_eventImages != null && _eventImages!.isNotEmpty) {
+        for (var image in _eventImages!.cast<XFile>()) {
+          String imageUrl = await _uploadEventImage(image);
+          imageUrls.add(imageUrl);
+        }
       }
 
       await FirebaseFirestore.instance.collection('events').add({
-        'title': _eventTitleController.text,
-        'description': _eventDescriptionController.text,
-        'startDateTime': _startDateTime.toString(),
-        'endDateTime': _endDateTime.toString(),
-        'startDate': _startDate.toString().split(" ")[0],
-        'endDate': _endDate.toString().split(" ")[0],
-        'location': _eventLocation?.latitude != null && _eventLocation?.longitude != null
-            ? GeoPoint(_eventLocation!.latitude, _eventLocation!.longitude)
-            : null,
-        'schoolOrganization': _schoolOrganization,
-        'eventType': _eventType,
-        'createdBy': user.uid,
-        'imageUrl': imageUrl,
-      });
+  'title': _eventTitleController.text,
+  'description': _eventDescriptionController.text,
+  'startDateTime': _startDateTime.toString(),
+  'endDateTime': _endDateTime.toString(),
+  'startDate': _startDate.toString().split(" ")[0],
+  'endDate': _endDate.toString().split(" ")[0],
+  'location': _eventLocation?.latitude != null && _eventLocation?.longitude != null
+      ? GeoPoint(_eventLocation!.latitude, _eventLocation!.longitude)
+      : null,
+  'schoolOrganization': _schoolOrganization,
+  'eventType': _eventType,
+  'createdBy': user.uid,
+  'imageUrls': imageUrls,
+});
       // Clear the form fields
       _eventTitleController.clear();
       _eventDescriptionController.clear();
@@ -179,7 +181,7 @@ Future <void> _selectStartTime() async {
         _eventLocation = null;
         _schoolOrganization = '';
         _eventType = '';
-        _eventImage = null;
+        _eventImages = null; 
       });
       Navigator.pop(context);
     }
@@ -487,11 +489,39 @@ Padding(
                       },
                     ),
                   ),
+                  GridView.builder(
+  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+    crossAxisCount: 3,
+    crossAxisSpacing: 8,
+    mainAxisSpacing: 8,
+  ),
+  itemCount: _eventImages?.length ?? 0,
+  itemBuilder: (context, index) {
+    return Image.file(
+      File(_eventImages![index].path),
+      fit: BoxFit.cover,
+    );
+  },
+),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
-                    onPressed: _pickEventImage,
+                    onPressed: _pickEventImages,
                     child: const Text('Upload Event Image'),
                   ),
+//                   GridView.builder(
+//   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+//     crossAxisCount: 3,
+//     crossAxisSpacing: 8,
+//     mainAxisSpacing: 8,
+//   ),
+//   itemCount: _eventImages?.length ?? 0,
+//   itemBuilder: (context, index) {
+//     return Image.file(
+//       File(_eventImages![index].path),
+//       fit: BoxFit.cover,
+//     );
+//   },
+// ),
                   const SizedBox(height: 16.0),
                   ElevatedButton(
                     onPressed: _saveEvent,
